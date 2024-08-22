@@ -10,3 +10,6 @@
 
 # Test Coverage
 <a href="https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-GALBARRACIN/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a09c36083ee9024ac9bc/test_coverage" /></a>
+
+##Funcionamiento
+ Este proyecto se basa en un ajedrez por turnos para dos personas, usando el módulo de PyGame. Cada vez que un jugador pierda una pieza esta aparecerá del lado derecho de la pantalla.

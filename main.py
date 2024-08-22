@@ -1,9 +1,3 @@
-def suma (a, b):
-    return a + b
-
-if __name__ == '__main__':
-    print(suma(1, 2))
-
 #Ajedredez con modulo PyGame
 
 import pygame
@@ -23,4 +17,4 @@ fps = 30 #Numero de fotogramas
 run = True
 while run:
     timer.tick(fps)
-    screen.fill('light yellow')
+    screen.fill('light yellow') #Color de Fondo
