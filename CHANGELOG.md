@@ -2,12 +2,10 @@
 
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
 
-## [v0.1.1] - 2024-08-24
+## [v0.1.2] - 2024-08-25
 
 ### Añadido
-- Se agregan imagenes de las piezas en el repositorio y en el codigo
-- Se agregan test probados con el proyecto ya terminado en Local.
-
+- Se actualizó el main.py agregando movimientos y restricciones de las piezas
 
 ### Modificado
 - Se actualizo la organización del proyecto.
