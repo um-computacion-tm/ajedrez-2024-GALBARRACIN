@@ -10,7 +10,7 @@ class Board:
     """
     Representa el tablero de ajedrez.
     """
-    def _init_(self):
+    def __init__(self):
         # Crea un tablero 8x8 con None en cada posición
         self.grid = [[None for _ in range(8)] for _ in range(8)]
         # Posiciona las piezas iniciales en el tablero

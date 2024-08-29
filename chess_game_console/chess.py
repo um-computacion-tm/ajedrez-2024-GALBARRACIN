@@ -11,7 +11,7 @@ class Chess:
     """
     Clase principal que controla la lógica del juego.
     """
-    def _init_(self):
+    def __init__(self):
         # Inicializamos el tablero del juego
         self.board = Board()
         # El juego inicia con el jugador blanco
@@ -59,10 +59,10 @@ class Chess:
         """
         piece_values = {'Pawn': 1, 'Knight': 3, 'Bishop': 3, 'Rook': 5, 'Queen': 9}
         if piece_captured:
-            self.score[self.current_turn] += piece_values.get(piece_captured._class.name_, 0)
+            self.score[self.current_turn] += piece_values.get(piece_captured.__class__.__name__, 0)
 
 
 # Ejecución del juego
-if _name_ == "_main_":
+if __name__ == "__main__":
     game = Chess()
     game.start()
