@@ -1,3 +1,5 @@
+#Inicia el juego
+
 # ===== Ajedrez para dos jugadores importando el modulo Pygame.... Aca se configura las variables, imágenes y el bucle de juego, y movimiento de piezass =====
 
 # ===== Configuro la Ventana de la App =====
