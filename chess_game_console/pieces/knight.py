@@ -1,10 +1,8 @@
 # pieces/knight.py
 from pieces.piece import Piece
 
+# ===== Clase para la pieza del Caballo =====
 class Knight(Piece):
-    """
-    Clase para la pieza del Caballo.
-    """
     def symbol(self):
         # Símbolo 'N' para Caballo blanco y 'n' para Caballo negro
         return 'N' if self.color == 'white' else 'n'

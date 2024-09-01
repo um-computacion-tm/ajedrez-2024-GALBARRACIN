@@ -14,7 +14,6 @@ chess_game_console/
 │   └── board.py     # Contiene la clase Board
 │
 ├── pieces/
-│   ├── __init__.py  # Hace que el directorio sea un paquete Python
 │   ├── piece.py     # Contiene la clase Piece (base)
 │   ├── pawn.py      # Contiene la clase Pawn
 │   ├── rook.py      # Contiene la clase Rook
@@ -23,7 +22,7 @@ chess_game_console/
 │   ├── queen.py     # Contiene la clase Queen
 │   └── king.py      # Contiene la clase King
 │
-└── test_console/
+└── tests/
     ├── __init__.py   # Hace que el directorio sea un paquete Python
     ├── test_pawn.py  # Pruebas unitarias para la clase Pawn
     ├── test_rook.py  # Pruebas unitarias para la clase Rook
@@ -102,3 +101,7 @@ Escribir " salir " en la consola
 Para ejecutar las pruebas unitarias, navega a la carpeta principal en la terminal y ejecuta el siguiente comando:
 
 " python -m unittest discover -s test_console "
+
+# Ejemplo Test de manera individual
+
+python -m unittest tests.test_bishop

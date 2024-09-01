@@ -1,10 +1,8 @@
 # pieces/king.py
 from pieces.piece import Piece
 
+# ===== Clase para la pieza del Rey.=====
 class King(Piece):
-    """
-    Clase para la pieza del Rey.
-    """
     def symbol(self):
         # Símbolo 'K' para Rey blanco y 'k' para Rey negro
         return 'K' if self.color == 'white' else 'k'
