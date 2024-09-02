@@ -1,39 +1,62 @@
+# tests/test_pawn.py
 import unittest
 from pieces.pawn import Pawn
+from pieces.piece import Piece
 
 class TestPawn(unittest.TestCase):
 
     def setUp(self):
-        self.white_pawn = Pawn('white')
-        self.black_pawn = Pawn('black')
-        # Simulación de un tablero vacío
+        # Configuración básica con un tablero vacío
         self.empty_board = [[None for _ in range(8)] for _ in range(8)]
+        self.pawn_white = Pawn('white')
+        self.pawn_black = Pawn('black')
 
-    def test_symbol(self):
-        self.assertEqual(self.white_pawn.symbol(), 'P')
-        self.assertEqual(self.black_pawn.symbol(), 'p')
+    def test_valid_move_forward_one(self):
+        # Movimiento válido hacia adelante (una casilla)
+        self.assertTrue(self.pawn_white.is_valid_move(6, 0, 5, 0, self.empty_board))
+        self.assertTrue(self.pawn_black.is_valid_move(1, 0, 2, 0, self.empty_board))
 
-    def test_valid_move_one_step_forward(self):
-        # Movimiento válido: un paso hacia adelante en un tablero vacío
-        self.assertTrue(self.white_pawn.is_valid_move(6, 4, 5, 4, self.empty_board))  # Blanco, un paso adelante
-        self.assertTrue(self.black_pawn.is_valid_move(1, 4, 2, 4, self.empty_board))  # Negro, un paso adelante
+    def test_valid_move_forward_two(self):
+        # Movimiento válido hacia adelante (dos casillas en el primer movimiento)
+        self.assertTrue(self.pawn_white.is_valid_move(6, 0, 4, 0, self.empty_board))
+        self.assertTrue(self.pawn_black.is_valid_move(1, 0, 3, 0, self.empty_board))
 
-    def test_invalid_move(self):
-        # Movimientos inválidos
-        self.assertFalse(self.white_pawn.is_valid_move(6, 4, 4, 4, self.empty_board))  # Blanco, dos pasos sin ser primer movimiento
-        self.assertFalse(self.white_pawn.is_valid_move(6, 4, 6, 5, self.empty_board))  # Blanco, movimiento lateral
-        self.assertFalse(self.black_pawn.is_valid_move(1, 4, 3, 4, self.empty_board))  # Negro, dos pasos sin ser primer movimiento
-        self.assertFalse(self.black_pawn.is_valid_move(1, 4, 1, 5, self.empty_board))  # Negro, movimiento lateral
+    def test_invalid_move_forward_blocked(self):
+        # Movimiento inválido porque está bloqueado por otra pieza
+        self.empty_board[5][0] = Piece('white')
+        self.assertFalse(self.pawn_white.is_valid_move(6, 0, 5, 0, self.empty_board))
 
-    def test_blocked_move(self):
-        # Movimiento inválido: otro peón bloquea el camino
-        self.empty_board[5][4] = Pawn('white')  # Peón blanco bloqueando
-        self.assertFalse(self.white_pawn.is_valid_move(6, 4, 5, 4, self.empty_board))  # Blanco, bloqueado
+        self.empty_board[2][0] = Piece('black')
+        self.assertFalse(self.pawn_black.is_valid_move(1, 0, 2, 0, self.empty_board))
 
-        self.empty_board[2][4] = Pawn('black')  # Peón negro bloqueando
-        self.assertFalse(self.black_pawn.is_valid_move(1, 4, 2, 4, self.empty_board))  # Negro, bloqueado
+    def test_invalid_move_forward_two_blocked(self):
+        # Movimiento inválido hacia adelante (dos casillas) porque está bloqueado por otra pieza
+        self.empty_board[4][0] = Piece('white')
+        self.assertFalse(self.pawn_white.is_valid_move(6, 0, 4, 0, self.empty_board))
+
+        self.empty_board[3][0] = Piece('black')
+        self.assertFalse(self.pawn_black.is_valid_move(1, 0, 3, 0, self.empty_board))
+
+    def test_valid_capture(self):
+        # Captura válida en diagonal
+        self.empty_board[5][1] = Piece('black')
+        self.assertTrue(self.pawn_white.is_valid_move(6, 0, 5, 1, self.empty_board))
+
+        self.empty_board[2][1] = Piece('white')
+        self.assertTrue(self.pawn_black.is_valid_move(1, 0, 2, 1, self.empty_board))
+
+    def test_invalid_capture_empty(self):
+        # Captura inválida porque no hay pieza en la casilla destino
+        self.assertFalse(self.pawn_white.is_valid_move(6, 0, 5, 1, self.empty_board))
+        self.assertFalse(self.pawn_black.is_valid_move(1, 0, 2, 1, self.empty_board))
+
+    def test_invalid_capture_same_color(self):
+        # Captura inválida porque la pieza en la casilla destino es del mismo color
+        self.empty_board[5][1] = Piece('white')
+        self.assertFalse(self.pawn_white.is_valid_move(6, 0, 5, 1, self.empty_board))
+
+        self.empty_board[2][1] = Piece('black')
+        self.assertFalse(self.pawn_black.is_valid_move(1, 0, 2, 1, self.empty_board))
 
 if __name__ == '__main__':
     unittest.main()
-
-#NO PASA EL TEST 

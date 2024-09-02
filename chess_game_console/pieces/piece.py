@@ -13,5 +13,3 @@ class Piece:
 # ===== Devuelve el símbolo que representa la pieza. =====
     def symbol(self):
         raise NotImplementedError()
-
-# Determina si el movimiento es válido (debe ser implementado por subclases).

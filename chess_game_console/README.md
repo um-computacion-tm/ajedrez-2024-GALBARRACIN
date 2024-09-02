@@ -2,35 +2,6 @@
 
 Este es un juego de ajedrez de consola escrito en Python. Permite a dos jugadores jugar utilizando comandos de texto en la consola.
 
-## Estructura del Proyecto
-
-El proyecto está organizado en diferentes carpetas y archivos para mantener el código limpio y modular:
-
-chess_game_console/
-│
-├── chess.py         # Archivo principal para iniciar el juego
-├── board/
-│   ├── __init__.py  # Hace que el directorio sea un paquete Python
-│   └── board.py     # Contiene la clase Board
-│
-├── pieces/
-│   ├── piece.py     # Contiene la clase Piece (base)
-│   ├── pawn.py      # Contiene la clase Pawn
-│   ├── rook.py      # Contiene la clase Rook
-│   ├── knight.py    # Contiene la clase Knight
-│   ├── bishop.py    # Contiene la clase Bishop
-│   ├── queen.py     # Contiene la clase Queen
-│   └── king.py      # Contiene la clase King
-│
-└── tests/
-    ├── __init__.py   # Hace que el directorio sea un paquete Python
-    ├── test_pawn.py  # Pruebas unitarias para la clase Pawn
-    ├── test_rook.py  # Pruebas unitarias para la clase Rook
-    ├── test_knight.py # Pruebas unitarias para la clase Knight
-    ├── test_bishop.py # Pruebas unitarias para la clase Bishop
-    ├── test_queen.py  # Pruebas unitarias para la clase Queen
-    └── test_king.py   # Pruebas unitarias para la clase King
-
 # Requisitos
 
 Tener instalado Python 3.x
@@ -80,16 +51,15 @@ mover <posición_inicial> <posición_destino>
 
 # Coordenadas
 
-8  r n b q k b n r
-7  p p p p p p p p
-6  . . . . . . . .
-5  . . . . . . . .
-4  . . . . . . . .
-3  . . . . . . . .
-2  P P P P P P P P
-1  R N B Q K B N R
-
-   a b c d e f g h
+- 8 r n b q k b n r
+- 7 p p p p p p p p
+- 6 - - - - - - - -
+- 5 - - - - - - - -
+- 4 - - - - - - - -
+- 3 - - - - - - - -
+- 2 P P P P P P P P
+- 1 R N B Q K B N R
+-   a b c d e f g h
 
 # Salir del juego
 
@@ -100,8 +70,8 @@ Escribir " salir " en la consola
 
 Para ejecutar las pruebas unitarias, navega a la carpeta principal en la terminal y ejecuta el siguiente comando:
 
-" python -m unittest discover -s test_console "
+" python -m unittest discover -s tests "
 
 # Ejemplo Test de manera individual
 
-python -m unittest tests.test_bishop
+" python -m unittest tests.test_bishop "

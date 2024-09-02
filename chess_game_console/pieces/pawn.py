@@ -1,7 +1,7 @@
 # pieces/pawn.py
 from pieces.piece import Piece
 
-# ===== Clase para la pieza del peón. ======
+# ===== Clase para la pieza del peón. =====
 class Pawn(Piece):
     def symbol(self):
         return 'P' if self.color == 'white' else 'p'
