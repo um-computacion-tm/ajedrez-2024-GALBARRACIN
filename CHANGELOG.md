@@ -1,6 +1,10 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
 
+## [v0.1.8] - 2024-09-1
+#### Añadido
+- Se agregaron nuevos tets y se comprobo su buen funcionamiento en la carpeta del ajedrez en consola 
+
 ## [v0.1.7] - 2024-08-31
 #### Añadido
 - Se actualizó el codigo de Ajedrez en consola y tests
