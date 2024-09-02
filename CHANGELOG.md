@@ -3,7 +3,7 @@ Este archivo documenta todos los cambios significativos realizados en este proye
 
 ## [v0.1.8] - 2024-09-1
 #### Añadido
-- Se agregaron nuevos tets y se comprobo su buen funcionamiento en la carpeta del ajedrez en consola 
+- Se agregaron nuevos tets y se comprobo su buen funcionamiento para Ajedrez Consola
 
 ## [v0.1.7] - 2024-08-31
 #### Añadido
