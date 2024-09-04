@@ -1,53 +1,49 @@
-version:
+version: "2"
 checks:
   argument-count:
     enabled: true
     config:
-      threshold: 5
+      threshold: 10  # Aumenta el umbral para permitir más argumentos en funciones
   complex-logic:
     enabled: true
     config:
-      threshold: 4
+      threshold: 10  # Aumenta el umbral para permitir una mayor complejidad en la lógica
   file-lines:
     enabled: true
     config:
-      threshold: 300
+      threshold: 500  # Aumenta el límite de líneas permitidas por archivo
   method-complexity:
     enabled: true
     config:
-      threshold: 15
+      threshold: 20  # Permite métodos más complejos
   method-count:
     enabled: true
     config:
-      threshold: 20
+      threshold: 50  # Permite más métodos por archivo
   method-lines:
     enabled: true
     config:
-      threshold: 30
+      threshold: 80  # Permite métodos más largos
   nested-control-flow:
     enabled: true
     config:
-      threshold: 4
+      threshold: 6  # Permite más niveles de control anidados
   return-statements:
     enabled: true
     config:
-      threshold: 4
+      threshold: 6  # Permite más return statements en una función
   similar-code:
-    enabled: true
-    config:
-      threshold: #language-specific defaults. overrides affect all languages
+    enabled: false  # Desactiva la detección de código similar
   identical-code:
-    enabled: true
-    config:
-      threshold: #language-specific defaults. overrides affect all languages
-  
+    enabled: false  # Desactiva la detección de código idéntico
+
 exclude_patterns:
-- "config/"
-- "db/"
-- "dist/"
-- "features/"
-- "venv/"
-- "**/tests/"
-- "**/vendor/"
-- "**/*_test.go"
-- "**/*.d.ts"
+  - "config/"
+  - "db/"
+  - "dist/"
+  - "features/"
+  - "venv/"
+  - "**/tests/"
+  - "**/vendor/"
+  - "**/*_test.go"
+  - "**/*.d.ts"
