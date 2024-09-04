@@ -1,26 +1,17 @@
 [run]
 source = main
 omit =
-    */__init__.py
-    */tests/*
     venv/*
-    .circleci/*
-    .git/*
-    */setup.py
-
+    */test/*
+    */__init__.py
 [report]
 exclude_lines =
     pragma: no cover
     def __repr__
-    def __str__
     def setUp
-    def tearDown
-    def suite
     def test_
-    if __name__ == "__main__"
-    print
     return raw_input
-
-# Considerar cualquier archivo que esté vacío como completamente cubierto
-[report]
-ignore_errors = True
+    print
+    if __name__ == "__main__":
+    def suite
+    __str__
