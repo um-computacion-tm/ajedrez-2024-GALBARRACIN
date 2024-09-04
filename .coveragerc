@@ -20,7 +20,3 @@ exclude_lines =
     if __name__ == "__main__"
     print
     return raw_input
-
-# Considerar cualquier archivo que esté vacío como completamente cubierto
-[report]
-ignore_errors = True
