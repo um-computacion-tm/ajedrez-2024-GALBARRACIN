@@ -1,12 +1,10 @@
 [run]
-source = main
+source = chess_game_console
 omit =
-    */__init__.py
-    */tests/*
     venv/*
-    .circleci/*
-    .git/*
-    */setup.py
+    */tests/*
+    */__init__.py
+
 
 [report]
 exclude_lines =
