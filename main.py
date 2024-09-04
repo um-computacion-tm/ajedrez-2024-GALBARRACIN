@@ -1,5 +1,3 @@
-#Inicia el juego
-
 # ===== Ajedrez para dos jugadores importando el modulo Pygame.... Aca se configura las variables, imágenes y el bucle de juego, y movimiento de piezass =====
 
 # ===== Configuro la Ventana de la App =====
@@ -546,3 +544,4 @@ while run:  # Bucle principal que mantiene el juego en marcha
 
     pygame.display.flip()  # Actualiza la pantalla con todos los cambios realizados
 pygame.quit()  # Termina la ejecución del juego
+
