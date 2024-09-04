@@ -1,6 +1,20 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
 
+## [v0.2.0] - 2024-09-02
+#### Añadido
+
+- Se agrego una nueva branch con el cogigo pygame
+
+#### Modificado
+
+- Se modifico la rama main
+- Se actualizaron los archivos de forma modular y para mas legibilidad
+
+## [v0.1.9] - 2024-09-02
+#### Añadido
+- Se reorganiza y se actualiza el orden de la carpeta Pygame
+
 ## [v0.1.8] - 2024-09-1
 #### Añadido
 - Se agregaron nuevos tets y se comprobo su buen funcionamiento para Ajedrez Consola
