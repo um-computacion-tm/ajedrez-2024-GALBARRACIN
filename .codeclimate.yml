@@ -1,47 +1,53 @@
-version: "2"
+version:
 checks:
   argument-count:
     enabled: true
     config:
-      threshold: 6  # Aumentado a 6 para ser más permisivo
+      threshold: 5
   complex-logic:
     enabled: true
     config:
-      threshold: 5  # Aumentado para permitir más complejidad
+      threshold: 4
   file-lines:
     enabled: true
     config:
-      threshold: 350  # Límite de líneas por archivo
+      threshold: 300
   method-complexity:
     enabled: true
     config:
-      threshold: 20  # Umbral más permisivo
+      threshold: 15
   method-count:
     enabled: true
     config:
-      threshold: 25  # Aumentado para manejar más métodos por clase
+      threshold: 20
   method-lines:
     enabled: true
     config:
-      threshold: 40  # Límite de líneas por método aumentado
+      threshold: 30
   nested-control-flow:
     enabled: true
     config:
-      threshold: 5  # Permitir más anidaciones
+      threshold: 4
   return-statements:
     enabled: true
     config:
-      threshold: 5  # Permitir más declaraciones de retorno
+      threshold: 4
   similar-code:
     enabled: true
+    config:
+      threshold: #language-specific defaults. overrides affect all languages
   identical-code:
     enabled: true
-
+    config:
+      threshold: #language-specific defaults. overrides affect all languages
+  
 exclude_patterns:
-  - "config/"
-  - "db/"
-  - "dist/"
-  - "venv/"
-  - "**/vendor/"
-  - "**/*_test.go"
-  - "**/*.d.ts"
+- "config/"
+- "db/"
+- "dist/"
+- "features/"
+- "venv/"
+- "**/tests/"
+- "**/vendor/"
+- "**/*_test.go"
+- "**/*.d.ts"
