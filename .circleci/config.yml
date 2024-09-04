@@ -17,8 +17,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            cd chess_game_console
-            coverage run -m unittest && coverage xml && coverage report -m
+            coverage run -m unittest discover -s chess_game_console/tests && coverage xml && coverage report -m
       - run:
           name: Upload CodeClimate coverage report
           command: |

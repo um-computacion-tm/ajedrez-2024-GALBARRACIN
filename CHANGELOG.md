@@ -1,7 +1,7 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
 
-## [v0.2.0] - 2024-09-02
+## [v0.2.0] - 2024-09-03
 #### Añadido
 
 - Se agrego una nueva branch con el cogigo pygame
