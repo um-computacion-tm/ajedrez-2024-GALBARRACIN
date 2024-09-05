@@ -1,6 +1,17 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
 
+## [v0.2.2] - 2024-09-05
+#### Añadido
+
+- Se mejoro la logica de la pieza Reina
+- Se agregaron test para main.py y piece.py
+
+## [v0.2.1] - 2024-09-04
+#### Añadido
+
+- Se corrigio tests y configuraciones para el buen funcionamiento de Circleci
+
 ## [v0.2.0] - 2024-09-03
 #### Añadido
 
