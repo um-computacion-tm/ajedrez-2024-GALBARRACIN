@@ -1,5 +1,10 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+## [v0.2.3] - 2024-09-06
+#### Añadido
+
+- Se agregaron comentarios en el funcionamiento del codigo
+- Se actualizo el README principal
 
 ## [v0.2.2] - 2024-09-05
 #### Añadido

@@ -11,5 +11,22 @@
 # Test Coverage
 <a href="https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-GALBARRACIN/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a09c36083ee9024ac9bc/test_coverage" /></a>
 
+### Proyecto de Ajedrez en Consola - Python
 ## Funcionamiento
- Este proyecto se basa en un ajedrez por turnos para dos personas, usando la consola.
+
+Este proyecto es una implementación del juego de ajedrez en la consola utilizando Python. El objetivo principal es crear un juego funcional y accesible, que permita a dos jugadores enfrentarse de manera interactiva.
+
+## Características
+- Juego completamente funcional con todas las reglas estándar del ajedrez.
+- Interfaz en la consola para introducir comandos y mover las piezas.
+- Verificación automática de reglas como jaque, jaque mate y tablas.
+- Cambio de turnos entre jugadores de manera automática.
+- Puntuación actualizable al final de cada partida.
+- Soporte para pruebas unitarias, ejecutables con el comando test para garantizar la estabilidad y calidad del código.
+- Estructura modular que facilita el mantenimiento y la adición de nuevas funcionalidades.
+
+## Tecnologías Utilizadas:
+- Python 3
+- Sistema de pruebas unitarias con unittest
+- Soporte de cobertura de código para asegurar un desarrollo con altos estándares de calidad.
+
