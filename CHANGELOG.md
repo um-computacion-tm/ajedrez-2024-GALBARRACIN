@@ -1,5 +1,10 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+## [v0.2.4] - 2024-09-07
+#### Añadido
+- se agregaron mas comentarios en el funcionamiento de codigo para el ajedrez en consola
+- se agrego el ajedrez con interfas grafica pygame sin modular debido a que no esta respondiendo como se esperaba de forma local.
+
 ## [v0.2.3] - 2024-09-06
 #### Añadido
 

@@ -30,3 +30,7 @@ Este proyecto es una implementación del juego de ajedrez en la consola utilizan
 - Sistema de pruebas unitarias con unittest
 - Soporte de cobertura de código para asegurar un desarrollo con altos estándares de calidad.
 
+### Ajedrez PYGAME
+
+- El proyecto tambien incluye un ajedrez diseñado en pygame para ser mas intuitivo para el usuario.
+
