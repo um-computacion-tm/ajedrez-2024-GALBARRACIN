@@ -1,5 +1,9 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+## [v0.2.5] - 2024-09-08
+#### Añadido
+-
+
 ## [v0.2.4] - 2024-09-07
 #### Añadido
 - se agregaron mas comentarios en el funcionamiento de codigo para el ajedrez en consola
