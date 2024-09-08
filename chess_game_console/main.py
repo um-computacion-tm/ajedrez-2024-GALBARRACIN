@@ -1,73 +1,95 @@
+import sys                            # Importa el módulo sys para manejar argumentos del sistema.
+import unittest                       # Importa el módulo unittest para ejecutar pruebas unitarias.
 
-import sys
-import unittest
-
-# ===== Archivo chess.py para Iniciar el Juego =====
-
-from board.board import Board           # Importa la clase Board, que representa el tablero de ajedrez.
-from pieces.pawn import Pawn            # Importa la clase Pawn, que representa la pieza del peón.
-from pieces.rook import Rook            # Importa la clase Rook, que representa la pieza de la torre.
-from pieces.knight import Knight        # Importa la clase Knight, que representa la pieza del caballo.
-from pieces.bishop import Bishop        # Importa la clase Bishop, que representa la pieza del alfil.
-from pieces.queen import Queen          # Importa la clase Queen, que representa la pieza de la reina.
-from pieces.king import King            # Importa la clase King, que representa la pieza del rey.
+from board.board import Board          # Importa la clase Board, que representa el tablero de ajedrez.
+from pieces.pawn import Pawn           # Importa la clase Pawn, que representa la pieza del peón.
+from pieces.rook import Rook           # Importa la clase Rook, que representa la pieza de la torre.
+from pieces.knight import Knight       # Importa la clase Knight, que representa la pieza del caballo.
+from pieces.bishop import Bishop       # Importa la clase Bishop, que representa la pieza del alfil.
+from pieces.queen import Queen         # Importa la clase Queen, que representa la pieza de la reina.
+from pieces.king import King           # Importa la clase King, que representa la pieza del rey.
 
 
-# ===== Clase principal que controla la lógica del juego. =====
-class Chess:                            # Define la clase Chess, que maneja la lógica general del juego de ajedrez.
+class Chess:
+    """
+    Clase principal que controla la lógica del juego de ajedrez.
+    """
 
-    def __init__(self):                 # Método constructor que inicializa el estado inicial del juego.
-        self.board = Board()            # Inicializamos el tablero del juego usando la clase Board.
-        self.current_turn = 'white'     # El juego inicia con el jugador blanco, representado por la variable 'current_turn'.
-        self.score = {'white': 0, 'black': 0}  # Inicializa el puntaje de los jugadores en un diccionario.
+    def __init__(self):
+        """
+        Inicializa el tablero de ajedrez, el turno inicial y la puntuación de los jugadores.
+        """
+        self.__board__ = Board()               # Crea una instancia de la clase Board para manejar el tablero.
+        self.__current_turn__ = 'white'        # Define que el turno inicial es para las piezas blancas.
+        self.__score__ = {'white': 0, 'black': 0}  # Inicializa un diccionario para llevar el puntaje de ambos jugadores.
 
+    def start(self):
+        """
+        Inicia el juego y maneja el ciclo principal del juego, permitiendo a los jugadores ingresar comandos.
+        """
+        while True:                            # Bucle infinito que mantiene el juego activo.
+            self.__board__.display()           # Muestra el tablero de ajedrez en su estado actual.
+            print(f"Turno actual: {self.__current_turn__}")  # Indica de quién es el turno actual.
+            print(f"Puntaje - Blanco: {self.__score__['white']}, Negro: {self.__score__['black']}")  # Muestra el puntaje de ambos jugadores.
+            command = input("Introduce tu movimiento o comando ('mover origen destino', 'salir'): ")  # Solicita al jugador ingresar un comando.
 
-# ===== Método que inicia el juego y permite la interacción con los jugadores. =====
-    def start(self):                    # Método que inicia y controla el bucle principal del juego.
+            if command == 'salir':             # Si el jugador ingresa 'salir', se termina el juego.
+                print("Gracias por jugar.")    # Muestra un mensaje de despedida.
+                exit()                         # Cierra el programa.
 
-        while True:                     # Bucle infinito para mantener el juego en funcionamiento hasta que se decida salir.
-            self.board.display()        # Muestra el tablero actual en la pantalla.
-            print(f"Turno actual: {self.current_turn}")  # Informa de quién es el turno.
-            print(f"Puntaje - Blanco: {self.score['white']}, Negro: {self.score['black']}")  # Muestra el puntaje actual de ambos jugadores.
-            command = input("Introduce tu movimiento o comando ('mover origen destino', 'salir'): ")  # Solicita un comando del jugador.
+            self.handle_command(command)       # Procesa el comando ingresado por el jugador.
 
-            if command == 'salir':      # Si el comando es 'salir', finaliza el juego.
-                print("Gracias por jugar.")
-                exit()
-
-            self.handle_command(command)  # Procesa el comando ingresado por el jugador usando el método handle_command.
-
-
-
-# ===== Procesa el comando ingresado por el jugador. =====
-    def handle_command(self, command):  # Método que maneja y valida los comandos ingresados por el jugador.
-        
-        parts = command.split()         # Divide el comando en partes (por ejemplo, 'mover e2 e4' se convierte en ['mover', 'e2', 'e4']).
-        if len(parts) == 3 and parts[0] == 'mover':  # Verifica si el comando es un movimiento válido.
-            start, end = parts[1], parts[2]  # Asigna las posiciones de inicio y fin del movimiento.
-            if self.board.move_piece(start, end, self.current_turn):  # Intenta mover la pieza en el tablero.
-                self.toggle_turn()      # Si el movimiento es exitoso, cambia el turno al otro jugador.
+    def handle_command(self, command):
+        """
+        Procesa el comando ingresado por el jugador y realiza la acción correspondiente.
+        Parámetros:
+        - command: string que contiene el comando del jugador (por ejemplo, 'mover e2 e4').
+        """
+        parts = command.split()                # Divide el comando en partes (ejemplo: 'mover e2 e4' en ['mover', 'e2', 'e4']).
+        if len(parts) == 3 and parts[0] == 'mover':  # Verifica que el comando sea un movimiento válido.
+            start, end = parts[1], parts[2]    # Asigna las posiciones de inicio y fin del movimiento.
+            captured_piece = self.__board__.move_piece(start, end, self.__current_turn__)  # Intenta mover la pieza y obtener la pieza capturada.
+            if captured_piece:                 # Si una pieza fue capturada, actualiza el puntaje.
+                self.update_score(captured_piece)
+            self.toggle_turn()                 # Si el movimiento es válido, cambia el turno al otro jugador.
         else:
-            print("Comando no válido. Ejemplo de uso: 'mover e2 e4'")  # Informa al jugador si el comando no es válido.
+            print("Comando no válido. Ejemplo de uso: 'mover e2 e4'")  # Muestra un mensaje de error si el comando no es válido.
 
-    def toggle_turn(self):              # Método que cambia el turno del jugador actual.
-        self.current_turn = 'black' if self.current_turn == 'white' else 'white'  # Alterna entre 'white' y 'black'.
+    def toggle_turn(self):
+        """
+        Cambia el turno actual del jugador, alternando entre 'white' y 'black'.
+        """
+        self.__current_turn__ = 'black' if self.__current_turn__ == 'white' else 'white'  # Alterna entre los turnos blanco y negro.
 
-    def update_score(self, piece_captured):  # Método que actualiza el puntaje cuando se captura una pieza.
-        piece_values = {'Pawn': 1, 'Knight': 3, 'Bishop': 3, 'Rook': 5, 'Queen': 9}  # Asigna un valor a cada tipo de pieza.
-        if piece_captured:             # Si se captura una pieza, actualiza el puntaje del jugador actual.
-            self.score[self.current_turn] += piece_values.get(piece_captured.__class__.__name__, 0)
+    def update_score(self, piece_captured):
+        """
+        Actualiza el puntaje del jugador que captura una pieza y muestra el puntaje ganado.
+        Parámetros:
+        - piece_captured: la pieza que fue capturada.
+        """
+        piece_values = {
+            'Pawn': 1,      # Peón (P)
+            'Knight': 3,    # Caballo (N)
+            'Bishop': 3,    # Alfil (B)
+            'Rook': 5,      # Torre (R)
+            'Queen': 9      # Reina (Q)
+        }  
+        
+        # Obtiene el nombre de la clase de la pieza capturada (por ejemplo, 'Pawn', 'Knight') y busca su valor.
+        captured_piece_value = piece_values.get(piece_captured.__class__.__name__, 0)
 
+        # Añade el valor de la pieza capturada al puntaje del jugador actual.
+        self.__score__[self.__current_turn__] += captured_piece_value
 
+        # Muestra el puntaje ganado al capturar la pieza.
+        print(f"¡Has ganado {captured_piece_value} puntos por capturar un {piece_captured.__class__.__name__}!")
 
-# ===== Ejecución del juego o ejecución de tests =====
-if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "test":
-        # Descubre y ejecuta todos los tests en el directorio tests/
-        loader = unittest.TestLoader()
-        tests = loader.discover('tests')
-        testRunner = unittest.TextTestRunner()
-        testRunner.run(tests)
+if __name__ == "__main__":                      # Verifica si el archivo se está ejecutando directamente.
+    if len(sys.argv) > 1 and sys.argv[1] == "test":  # Si se pasa el argumento 'test', ejecuta las pruebas unitarias.
+        loader = unittest.TestLoader()          # Crea un cargador de pruebas unitarias.
+        tests = loader.discover('tests')        # Descubre y carga todas las pruebas en el directorio 'tests'.
+        testRunner = unittest.TextTestRunner()  # Crea un ejecutor de pruebas unitarias que muestra los resultados en texto.
+        testRunner.run(tests)                   # Ejecuta todas las pruebas descubiertas.
     else:
-        game = Chess()
-        game.start()
+        game = Chess()                          # Si no se pasa el argumento 'test', inicia el juego de ajedrez.
+        game.start()                            # Llama al método start() para iniciar el ciclo del juego.
