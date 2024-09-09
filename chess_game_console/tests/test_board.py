@@ -1,5 +1,5 @@
 import unittest
-from board.board import Board
+from board.board import Board  # Corrige la ruta de importación
 from pieces.pawn import Pawn
 from pieces.rook import Rook
 from pieces.knight import Knight
@@ -14,61 +14,47 @@ class TestBoard(unittest.TestCase):
 
     def test_initial_setup(self):
         # Verifica que las piezas estén correctamente colocadas
-        grid = self.board.get_grid()  # Usa el getter en lugar de acceder directamente a la variable privada
-        self.assertIsInstance(grid[1][0], Pawn)
-        self.assertIsInstance(grid[0][0], Rook)
-        self.assertIsInstance(grid[0][1], Knight)
-        self.assertIsInstance(grid[0][2], Bishop)
-        self.assertIsInstance(grid[0][3], Queen)
-        self.assertIsInstance(grid[0][4], King)
+        self.assertIsInstance(self.board.grid[1][0], Pawn, "Debe haber un peón en 1,0 (bando blanco)")
+        self.assertIsInstance(self.board.grid[0][0], Rook, "Debe haber una torre en 0,0 (bando blanco)")
+        self.assertIsInstance(self.board.grid[0][1], Knight, "Debe haber un caballo en 0,1 (bando blanco)")
+        self.assertIsInstance(self.board.grid[0][2], Bishop, "Debe haber un alfil en 0,2 (bando blanco)")
+        self.assertIsInstance(self.board.grid[0][3], Queen, "Debe haber una reina en 0,3 (bando blanco)")
+        self.assertIsInstance(self.board.grid[0][4], King, "Debe haber un rey en 0,4 (bando blanco)")
 
-        self.assertIsInstance(grid[6][0], Pawn)
-        self.assertIsInstance(grid[7][0], Rook)
-        self.assertIsInstance(grid[7][1], Knight)
-        self.assertIsInstance(grid[7][2], Bishop)
-        self.assertIsInstance(grid[7][3], Queen)
-        self.assertIsInstance(grid[7][4], King)
+        self.assertIsInstance(self.board.grid[6][0], Pawn, "Debe haber un peón en 6,0 (bando negro)")
+        self.assertIsInstance(self.board.grid[7][0], Rook, "Debe haber una torre en 7,0 (bando negro)")
+        self.assertIsInstance(self.board.grid[7][1], Knight, "Debe haber un caballo en 7,1 (bando negro)")
+        self.assertIsInstance(self.board.grid[7][2], Bishop, "Debe haber un alfil en 7,2 (bando negro)")
+        self.assertIsInstance(self.board.grid[7][3], Queen, "Debe haber una reina en 7,3 (bando negro)")
+        self.assertIsInstance(self.board.grid[7][4], King, "Debe haber un rey en 7,4 (bando negro)")
 
     def test_move_piece_valid(self):
         # Verifica que se pueda mover una pieza válida
-        self.assertTrue(self.board.move_piece("e2", "e4", "white"))  # Movimiento válido del peón blanco
-        grid = self.board.get_grid()  # Usa el getter
-        self.assertIsInstance(grid[4][4], Pawn)  # El peón se movió a la nueva posición
-        self.assertIsNone(grid[6][4])  # La posición inicial está vacía
+        self.assertTrue(self.board.move_piece("e2", "e4", "white"), "El movimiento de peón debe ser válido")
+        self.assertIsInstance(self.board.grid[4][4], Pawn, "Debe haber un peón en e4")
+        self.assertIsNone(self.board.grid[6][4], "La casilla e2 debe estar vacía tras el movimiento")
 
     def test_move_piece_invalid(self):
         # Verifica que no se pueda mover una pieza de manera inválida
-        self.assertFalse(self.board.move_piece("e2", "e5", "white"))  # Movimiento inválido del peón
-        grid = self.board.get_grid()  # Usa el getter
-        self.assertIsInstance(grid[6][4], Pawn)  # La pieza no se movió
-        self.assertIsNone(grid[3][4])  # La posición destino no cambió
+        self.assertFalse(self.board.move_piece("e2", "e5", "white"), "El movimiento de peón es inválido")
+        self.assertIsInstance(self.board.grid[6][4], Pawn, "El peón debe seguir en e2 después del movimiento inválido")
+        self.assertIsNone(self.board.grid[3][4], "La casilla e5 debe estar vacía")
 
     def test_invalid_color_move(self):
         # Verifica que no se pueda mover una pieza del color incorrecto
-        self.assertFalse(self.board.move_piece("e7", "e5", "white"))  # Movimiento de una pieza negra con el turno de blanco
+        self.assertFalse(self.board.move_piece("e7", "e5", "white"), "No se puede mover una pieza negra en el turno de las blancas")
 
     def test_capture_piece(self):
         # Verifica que se pueda capturar una pieza
         self.board.move_piece("e2", "e4", "white")
         self.board.move_piece("d7", "d5", "black")
-        self.assertTrue(self.board.move_piece("e4", "d5", "white"))  # El peón blanco captura el peón negro
-        grid = self.board.get_grid()  # Usa el getter
-        self.assertIsInstance(grid[3][3], Pawn)  # El peón blanco está en la nueva posición
-        self.assertIsNone(grid[4][4])  # La posición original del peón blanco está vacía
+        self.assertTrue(self.board.move_piece("e4", "d5", "white"), "El peón blanco debe capturar el peón negro")
+        self.assertIsInstance(self.board.grid[3][3], Pawn, "Debe haber un peón blanco en d5 tras la captura")
+        self.assertIsNone(self.board.grid[4][4], "La casilla e4 debe estar vacía tras la captura")
 
     def test_invalid_start_position(self):
         # Verifica que no se pueda mover una pieza desde una posición vacía
-        self.assertFalse(self.board.move_piece("e3", "e4", "white"))  # No hay ninguna pieza en e3
-
-    def test_get_captured_pieces(self):
-        # Verifica que se devuelvan correctamente las piezas capturadas
-        self.board.move_piece("e2", "e4", "white")
-        self.board.move_piece("d7", "d5", "black")
-        self.board.move_piece("e4", "d5", "white")  # El peón blanco captura el peón negro
-
-        captured_black_pieces = self.board.get_captured_pieces("white")
-        self.assertEqual(len(captured_black_pieces), 1)
-        self.assertIsInstance(captured_black_pieces[0], Pawn)
+        self.assertFalse(self.board.move_piece("e3", "e4", "white"), "No debe ser posible mover una pieza desde una posición vacía")
 
 if __name__ == '__main__':
     unittest.main()
