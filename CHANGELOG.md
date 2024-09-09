@@ -2,7 +2,12 @@
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
 ## [v0.2.5] - 2024-09-08
 #### Añadido
--
+- Principios SOLID para main.py y board.py
+- Puntajes de las piezas
+- Mensaje al eliminar pieza
+
+#### Proximamente
+- Actualizacion de test para main y board
 
 ## [v0.2.4] - 2024-09-07
 #### Añadido
