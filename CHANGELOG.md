@@ -1,8 +1,13 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+## [v0.2.7] - 2024-09-10
+#### Añadido
+- Se agregaron nuevos test para main.py y board.py
+- Se actualizo y coriigio los comentarios con su respectivo titulo en todos los codigos
+
 ## [v0.2.6] - 2024-09-09
 #### Añadido
-- correccion de test main y test board completo
+- se elimino los tests de main y board debidos a errores con su ejecucion 
 
 ## [v0.2.5] - 2024-09-08
 #### Añadido
