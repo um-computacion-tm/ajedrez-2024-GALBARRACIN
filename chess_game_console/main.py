@@ -10,23 +10,21 @@ from pieces.queen import Queen         # Importa la clase Queen, que representa 
 from pieces.king import King           # Importa la clase King, que representa la pieza del rey.
 
 
+# ===== Clase principal que controla la lógica del juego de ajedrez. =====
 class Chess:
-    """
-    Clase principal que controla la lógica del juego de ajedrez.
-    """
 
+
+    # ===== Inicializa el tablero de ajedrez, el turno inicial y la puntuación de los jugadores. =====
     def __init__(self):
-        """
-        Inicializa el tablero de ajedrez, el turno inicial y la puntuación de los jugadores.
-        """
+
         self.__board__ = Board()               # Crea una instancia de la clase Board para manejar el tablero.
         self.__current_turn__ = 'white'        # Define que el turno inicial es para las piezas blancas.
         self.__score__ = {'white': 0, 'black': 0}  # Inicializa un diccionario para llevar el puntaje de ambos jugadores.
 
+
+    # ===== Inicia el juego y maneja el ciclo principal del juego, permitiendo a los jugadores ingresar comandos. =====
     def start(self):
-        """
-        Inicia el juego y maneja el ciclo principal del juego, permitiendo a los jugadores ingresar comandos.
-        """
+
         while True:                            # Bucle infinito que mantiene el juego activo.
             self.__board__.display()           # Muestra el tablero de ajedrez en su estado actual.
             print(f"Turno actual: {self.__current_turn__}")  # Indica de quién es el turno actual.
@@ -39,12 +37,15 @@ class Chess:
 
             self.handle_command(command)       # Procesa el comando ingresado por el jugador.
 
+
+    # ===== Procesa el comando ingresado por el jugador y realiza la acción correspondiente. =====
     def handle_command(self, command):
+        
         """
-        Procesa el comando ingresado por el jugador y realiza la acción correspondiente.
         Parámetros:
         - command: string que contiene el comando del jugador (por ejemplo, 'mover e2 e4').
         """
+
         parts = command.split()                # Divide el comando en partes (ejemplo: 'mover e2 e4' en ['mover', 'e2', 'e4']).
         if len(parts) == 3 and parts[0] == 'mover':  # Verifica que el comando sea un movimiento válido.
             start, end = parts[1], parts[2]    # Asigna las posiciones de inicio y fin del movimiento.
@@ -55,18 +56,20 @@ class Chess:
         else:
             print("Comando no válido. Ejemplo de uso: 'mover e2 e4'")  # Muestra un mensaje de error si el comando no es válido.
 
+
+    # ===== Cambia el turno actual del jugador, alternando entre 'white' y 'black'. =====
     def toggle_turn(self):
-        """
-        Cambia el turno actual del jugador, alternando entre 'white' y 'black'.
-        """
         self.__current_turn__ = 'black' if self.__current_turn__ == 'white' else 'white'  # Alterna entre los turnos blanco y negro.
 
+
+    # ===== Actualiza el puntaje del jugador que captura una pieza y muestra el puntaje ganado. =====
     def update_score(self, piece_captured):
+
         """
-        Actualiza el puntaje del jugador que captura una pieza y muestra el puntaje ganado.
         Parámetros:
         - piece_captured: la pieza que fue capturada.
         """
+
         piece_values = {
             'Pawn': 1,      # Peón (P)
             'Knight': 3,    # Caballo (N)
@@ -75,15 +78,15 @@ class Chess:
             'Queen': 9      # Reina (Q)
         }  
         
-        # Obtiene el nombre de la clase de la pieza capturada (por ejemplo, 'Pawn', 'Knight') y busca su valor.
-        captured_piece_value = piece_values.get(piece_captured.__class__.__name__, 0)
+        
+        captured_piece_value = piece_values.get(piece_captured.__class__.__name__, 0) # Obtiene el nombre de la clase de la pieza capturada (por ejemplo, 'Pawn', 'Knight') y busca su valor.
+        
+        self.__score__[self.__current_turn__] += captured_piece_value # Añade el valor de la pieza capturada al puntaje del jugador actual.
 
-        # Añade el valor de la pieza capturada al puntaje del jugador actual.
-        self.__score__[self.__current_turn__] += captured_piece_value
+        print(f"¡Has ganado {captured_piece_value} puntos por capturar un {piece_captured.__class__.__name__}!") # Muestra el puntaje ganado al capturar la pieza.
 
-        # Muestra el puntaje ganado al capturar la pieza.
-        print(f"¡Has ganado {captured_piece_value} puntos por capturar un {piece_captured.__class__.__name__}!")
 
+# ===== Ejecución del juego o ejecución de tests =====
 if __name__ == "__main__":                      # Verifica si el archivo se está ejecutando directamente.
     if len(sys.argv) > 1 and sys.argv[1] == "test":  # Si se pasa el argumento 'test', ejecuta las pruebas unitarias.
         loader = unittest.TestLoader()          # Crea un cargador de pruebas unitarias.
@@ -93,3 +96,4 @@ if __name__ == "__main__":                      # Verifica si el archivo se est�
     else:
         game = Chess()                          # Si no se pasa el argumento 'test', inicia el juego de ajedrez.
         game.start()                            # Llama al método start() para iniciar el ciclo del juego.
+
