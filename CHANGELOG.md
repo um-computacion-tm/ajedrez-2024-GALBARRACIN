@@ -3,7 +3,7 @@ Este archivo documenta todos los cambios significativos realizados en este proye
 ## [v0.2.7] - 2024-09-10
 #### Añadido
 - Se agregaron nuevos test para main.py y board.py
-- Se actualizo y coriigio los comentarios con su respectivo titulo en todos los codigos
+- Se actualizo y corigió los comentarios con su respectivo titulo en todos los codigos
 - Se arreglo la ubicacion de las imagenes del codigo hecho en pygame
 
 ## [v0.2.6] - 2024-09-09
@@ -44,7 +44,7 @@ Este archivo documenta todos los cambios significativos realizados en este proye
 ## [v0.2.0] - 2024-09-03
 #### Añadido
 
-- Se agrego una nueva branch con el cogigo pygame
+- Se agrego una nueva branch con el codigo pygame
 
 #### Modificado
 
