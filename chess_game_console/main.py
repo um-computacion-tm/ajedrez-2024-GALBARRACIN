@@ -97,3 +97,4 @@ if __name__ == "__main__":                      # Verifica si el archivo se est�
         game = Chess()                          # Si no se pasa el argumento 'test', inicia el juego de ajedrez.
         game.start()                            # Llama al método start() para iniciar el ciclo del juego.
 
+#Albarracín Gonzalo Nahuel

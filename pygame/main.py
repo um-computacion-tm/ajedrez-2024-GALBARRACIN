@@ -44,51 +44,51 @@ valid_moves = []  # Lista que almacena los movimientos válidos posibles para la
 
 # ===== Cargar en el juego imágenes de piezas (reina, rey, torre, alfil, caballo, peón) x 2 =====
 
-black_queen = pygame.image.load('assets/images/black queen.png')  # Carga la imagen de la reina negra
+black_queen = pygame.image.load('pygame/assets/images/black queen.png')  # Carga la imagen de la reina negra
 black_queen = pygame.transform.scale(black_queen, (80, 80))  # Escala la reina negra a 80x80 píxeles
 black_queen_small = pygame.transform.scale(black_queen, (45, 45))  # Escala la reina negra a 45x45 píxeles
 
-black_king = pygame.image.load('assets/images/black king.png')  # Carga la imagen del rey negro
+black_king = pygame.image.load('pygame/assets/images/black king.png')  # Carga la imagen del rey negro
 black_king = pygame.transform.scale(black_king, (80, 80))  # Escala el rey negro a 80x80 píxeles
 black_king_small = pygame.transform.scale(black_king, (45, 45))  # Escala el rey negro a 45x45 píxeles
 
-black_rook = pygame.image.load('assets/images/black rook.png')  # Carga la imagen de la torre negra
+black_rook = pygame.image.load('pygame/assets/images/black rook.png')  # Carga la imagen de la torre negra
 black_rook = pygame.transform.scale(black_rook, (80, 80))  # Escala la torre negra a 80x80 píxeles
 black_rook_small = pygame.transform.scale(black_rook, (45, 45))  # Escala la torre negra a 45x45 píxeles
 
-black_bishop = pygame.image.load('assets/images/black bishop.png')  # Carga la imagen del alfil negro
+black_bishop = pygame.image.load('pygame/assets/images/black bishop.png')  # Carga la imagen del alfil negro
 black_bishop = pygame.transform.scale(black_bishop, (80, 80))  # Escala el alfil negro a 80x80 píxeles
 black_bishop_small = pygame.transform.scale(black_bishop, (45, 45))  # Escala el alfil negro a 45x45 píxeles
 
-black_knight = pygame.image.load('assets/images/black knight.png')  # Carga la imagen del caballo negro
+black_knight = pygame.image.load('pygame/assets/images/black knight.png')  # Carga la imagen del caballo negro
 black_knight = pygame.transform.scale(black_knight, (80, 80))  # Escala el caballo negro a 80x80 píxeles
 black_knight_small = pygame.transform.scale(black_knight, (45, 45))  # Escala el caballo negro a 45x45 píxeles
 
-black_pawn = pygame.image.load('assets/images/black pawn.png')  # Carga la imagen del peón negro
+black_pawn = pygame.image.load('pygame/assets/images/black pawn.png')  # Carga la imagen del peón negro
 black_pawn = pygame.transform.scale(black_pawn, (65, 65))  # Escala el peón negro a 65x65 píxeles
 black_pawn_small = pygame.transform.scale(black_pawn, (45, 45))  # Escala el peón negro a 45x45 píxeles
 
-white_queen = pygame.image.load('assets/images/white queen.png')  # Carga la imagen de la reina blanca
+white_queen = pygame.image.load('pygame/assets/images/white queen.png')  # Carga la imagen de la reina blanca
 white_queen = pygame.transform.scale(white_queen, (80, 80))  # Escala la reina blanca a 80x80 píxeles
 white_queen_small = pygame.transform.scale(white_queen, (45, 45))  # Escala la reina blanca a 45x45 píxeles
 
-white_king = pygame.image.load('assets/images/white king.png')  # Carga la imagen del rey blanco
+white_king = pygame.image.load('pygame/assets/images/white king.png')  # Carga la imagen del rey blanco
 white_king = pygame.transform.scale(white_king, (80, 80))  # Escala el rey blanco a 80x80 píxeles
 white_king_small = pygame.transform.scale(white_king, (45, 45))  # Escala el rey blanco a 45x45 píxeles
 
-white_rook = pygame.image.load('assets/images/white rook.png')  # Carga la imagen de la torre blanca
+white_rook = pygame.image.load('pygame/assets/images/white rook.png')  # Carga la imagen de la torre blanca
 white_rook = pygame.transform.scale(white_rook, (80, 80))  # Escala la torre blanca a 80x80 píxeles
 white_rook_small = pygame.transform.scale(white_rook, (45, 45))  # Escala la torre blanca a 45x45 píxeles
 
-white_bishop = pygame.image.load('assets/images/white bishop.png')  # Carga la imagen del alfil blanco
+white_bishop = pygame.image.load('pygame/assets/images/white bishop.png')  # Carga la imagen del alfil blanco
 white_bishop = pygame.transform.scale(white_bishop, (80, 80))  # Escala el alfil blanco a 80x80 píxeles
 white_bishop_small = pygame.transform.scale(white_bishop, (45, 45))  # Escala el alfil blanco a 45x45 píxeles
 
-white_knight = pygame.image.load('assets/images/white knight.png')  # Carga la imagen del caballo blanco
+white_knight = pygame.image.load('pygame/assets/images/white knight.png')  # Carga la imagen del caballo blanco
 white_knight = pygame.transform.scale(white_knight, (80, 80))  # Escala el caballo blanco a 80x80 píxeles
 white_knight_small = pygame.transform.scale(white_knight, (45, 45))  # Escala el caballo blanco a 45x45 píxeles
 
-white_pawn = pygame.image.load('assets/images/white pawn.png')  # Carga la imagen del peón blanco
+white_pawn = pygame.image.load('pygame/assets/images/white pawn.png')  # Carga la imagen del peón blanco
 white_pawn = pygame.transform.scale(white_pawn, (65, 65))  # Escala el peón blanco a 65x65 píxeles
 white_pawn_small = pygame.transform.scale(white_pawn, (45, 45))  # Escala el peón blanco a 45x45 píxeles
 
@@ -545,3 +545,4 @@ while run:  # Bucle principal que mantiene el juego en marcha
     pygame.display.flip()  # Actualiza la pantalla con todos los cambios realizados
 pygame.quit()  # Termina la ejecución del juego
 
+#Albarracín Gonzalo Nahuel
