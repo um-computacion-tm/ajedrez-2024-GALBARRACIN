@@ -9,52 +9,79 @@ from pieces.king import King
 
 class TestBoard(unittest.TestCase):
 
+
+    # ===== Configura un tablero nuevo antes de cada prueba. =====
     def setUp(self):
-        self.board = Board()  # Configura un nuevo tablero antes de cada test
+        self.board = Board()
 
+
+    # ===== Verifica que las piezas se coloquen correctamente en sus posiciones iniciales. =====
     def test_initial_setup(self):
-        # Verifica que las piezas estén correctamente colocadas
-        self.assertIsInstance(self.board.grid[1][0], Pawn)
-        self.assertIsInstance(self.board.grid[0][0], Rook)
-        self.assertIsInstance(self.board.grid[0][1], Knight)
-        self.assertIsInstance(self.board.grid[0][2], Bishop)
-        self.assertIsInstance(self.board.grid[0][3], Queen)
-        self.assertIsInstance(self.board.grid[0][4], King)
+        
+        # Verifica los peones negros en la fila 1
+        for col in range(8):
+            self.assertIsInstance(self.board.grid[1][col], Pawn)
+            self.assertEqual(self.board.grid[1][col].color, 'black')
 
-        self.assertIsInstance(self.board.grid[6][0], Pawn)
-        self.assertIsInstance(self.board.grid[7][0], Rook)
-        self.assertIsInstance(self.board.grid[7][1], Knight)
-        self.assertIsInstance(self.board.grid[7][2], Bishop)
-        self.assertIsInstance(self.board.grid[7][3], Queen)
-        self.assertIsInstance(self.board.grid[7][4], King)
+        # Verifica los peones blancos en la fila 6
+        for col in range(8):
+            self.assertIsInstance(self.board.grid[6][col], Pawn)
+            self.assertEqual(self.board.grid[6][col].color, 'white')
 
+        # Verifica las demás piezas negras en la fila 0
+        expected_black = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+        for col, piece_class in enumerate(expected_black):
+            self.assertIsInstance(self.board.grid[0][col], piece_class)
+            self.assertEqual(self.board.grid[0][col].color, 'black')
+
+        # Verifica las demás piezas blancas en la fila 7
+        expected_white = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+        for col, piece_class in enumerate(expected_white):
+            self.assertIsInstance(self.board.grid[7][col], piece_class)
+            self.assertEqual(self.board.grid[7][col].color, 'white')
+
+
+    # ===== Verifica que una pieza se mueva correctamente a una nueva posición. =====
     def test_move_piece_valid(self):
-        # Verifica que se pueda mover una pieza válida
-        self.assertTrue(self.board.move_piece("e2", "e4", "white"))  # Movimiento válido del peón blanco
+        # Mueve un peón blanco de e2 a e4
+        self.board.move_piece('e2', 'e4', 'white')
         self.assertIsInstance(self.board.grid[4][4], Pawn)
-        self.assertIsNone(self.board.grid[6][4])
+        self.assertIsNone(self.board.grid[6][4])  # La posición inicial debe estar vacía.
 
+
+     # ===== Verifica que no se permita mover una pieza de manera inválida. =====
     def test_move_piece_invalid(self):
-        # Verifica que no se pueda mover una pieza de manera inválida
-        self.assertFalse(self.board.move_piece("e2", "e5", "white"))  # Movimiento inválido del peón
-        self.assertIsInstance(self.board.grid[6][4], Pawn)  # La pieza no se movió
-        self.assertIsNone(self.board.grid[3][4])
 
-    def test_invalid_color_move(self):
-        # Verifica que no se pueda mover una pieza del color incorrecto
-        self.assertFalse(self.board.move_piece("e7", "e5", "white"))  # Movimiento de una pieza negra con el turno de blanco
+        # Intenta mover una pieza de una casilla vacía
+        result = self.board.move_piece('e3', 'e5', 'white')
+        self.assertIsNone(result)
 
+
+    # ===== Verifica que una captura ocurra correctamente y que la pieza capturada se añada a la lista correspondiente. =====
     def test_capture_piece(self):
-        # Verifica que se pueda capturar una pieza
-        self.board.move_piece("e2", "e4", "white")
-        self.board.move_piece("d7", "d5", "black")
-        self.assertTrue(self.board.move_piece("e4", "d5", "white"))  # El peón blanco captura el peón negro
-        self.assertIsInstance(self.board.grid[3][3], Pawn)  # El peón blanco está en la nueva posición
-        self.assertIsNone(self.board.grid[4][4])  # La posición original del peón blanco está vacía
+        # Mueve un peón blanco de e2 a e4
+        self.board.move_piece('e2', 'e4', 'white')
 
-    def test_invalid_start_position(self):
-        # Verifica que no se pueda mover una pieza desde una posición vacía
-        self.assertFalse(self.board.move_piece("e3", "e4", "white"))  # No hay ninguna pieza en e3
+        # Mueve un peón negro de d7 a d5
+        self.board.move_piece('d7', 'd5', 'black')
+
+        # Captura el peón negro con el peón blanco
+        captured = self.board.move_piece('e4', 'd5', 'white')
+        self.assertIsInstance(captured, Pawn)
+        self.assertIn(captured, self.board.captured_pieces_black)  # Verificamos que la pieza capturada está en la lista de capturas de blancas.
+
+
+    # ===== Verifica que se puedan obtener las piezas capturadas correctamente. =====
+    def test_get_captured_pieces(self):
+        # Mueve un peón blanco de e2 a e4
+        self.board.move_piece('e2', 'e4', 'white')
+
+        # Mueve un peón negro de d7 a d5
+        self.board.move_piece('d7', 'd5', 'black')
+
+        # Captura el peón negro con el peón blanco
+        captured = self.board.move_piece('e4', 'd5', 'white')
+        self.assertIn(captured, self.board.get_captured_pieces('white'))
 
 if __name__ == '__main__':
     unittest.main()

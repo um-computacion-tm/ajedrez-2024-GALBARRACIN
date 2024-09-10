@@ -1,5 +1,33 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+## [v0.2.7] - 2024-09-10
+#### Añadido
+- Se agregaron nuevos test para main.py y board.py
+- Se actualizo y coriigio los comentarios con su respectivo titulo en todos los codigos
+
+## [v0.2.6] - 2024-09-09
+#### Añadido
+- se elimino los tests de main y board debidos a errores con su ejecucion 
+
+## [v0.2.5] - 2024-09-08
+#### Añadido
+- Principios SOLID para main.py y board.py
+- Puntajes de las piezas
+- Mensaje al eliminar pieza
+
+#### Proximamente
+- Actualizacion de test para main y board
+
+## [v0.2.4] - 2024-09-07
+#### Añadido
+- se agregaron mas comentarios en el funcionamiento de codigo para el ajedrez en consola
+- se agrego el ajedrez con interfas grafica pygame sin modular debido a que no esta respondiendo como se esperaba de forma local.
+
+## [v0.2.3] - 2024-09-06
+#### Añadido
+
+- Se agregaron comentarios en el funcionamiento del codigo
+- Se actualizo el README principal
 
 ## [v0.2.2] - 2024-09-05
 #### Añadido
