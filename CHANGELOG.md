@@ -1,5 +1,9 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+## [v0.2.6] - 2024-09-09
+#### Añadido
+- correccion de test main y test board completo
+
 ## [v0.2.5] - 2024-09-08
 #### Añadido
 - Principios SOLID para main.py y board.py
