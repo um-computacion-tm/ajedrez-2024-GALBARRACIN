@@ -35,11 +35,11 @@ Rey (K): Se mueve una casilla en cualquier dirección.
 
 # Puntaje: El juego muestra el puntaje en función de las piezas capturadas:
 
-Peón (P): 1 punto
-Caballo (N): 3 puntos
-Alfil (B): 3 puntos
-Torre (R): 5 puntos
-Reina (Q): 9 puntos
+- Peón (P): 1 punto
+- aballo (N): 3 puntos
+- Alfil (B): 3 puntos
+- Torre (R): 5 puntos
+- Reina (Q): 9 puntos
 
 # Personalización
 
