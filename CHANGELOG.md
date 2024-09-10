@@ -4,6 +4,7 @@ Este archivo documenta todos los cambios significativos realizados en este proye
 #### Añadido
 - Se agregaron nuevos test para main.py y board.py
 - Se actualizo y coriigio los comentarios con su respectivo titulo en todos los codigos
+- Se arreglo la ubicacion de las imagenes del codigo hecho en pygame
 
 ## [v0.2.6] - 2024-09-09
 #### Añadido

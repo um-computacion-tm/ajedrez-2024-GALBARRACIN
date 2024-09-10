@@ -11,6 +11,10 @@
 # Test Coverage
 <a href="https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-GALBARRACIN/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a09c36083ee9024ac9bc/test_coverage" /></a>
 
+## Contenido
+
+El contenido se basa en dos proyectos con los codigos completamente funcionales pertenecientes a un ajedrez realizado en consola, con sus tests y su estructura correspondiente. Y el otro proyecto esta echo graficamente mediante pygame para ser mas amigable con el usuario.
+
 ### Proyecto de Ajedrez en Consola - Python
 ## Funcionamiento
 
@@ -32,5 +36,5 @@ Este proyecto es una implementación del juego de ajedrez en la consola utilizan
 
 ### Ajedrez PYGAME
 
-- El proyecto tambien incluye un ajedrez diseñado en pygame para ser mas intuitivo para el usuario.
+- Incluye un ajedrez diseñado en pygame, es más estetico e intuitivo para el usuario.
 
