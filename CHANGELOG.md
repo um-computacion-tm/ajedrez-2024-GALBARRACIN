@@ -1,5 +1,13 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+
+## [v0.2.8] - 2024-10-01
+#### Añadido
+- Se actualizo codigo main correspondiente a las capturas mostradas en la terminal
+- Se actualizo codigo del Rey 
+- Se agrego Guardado de partida local mediante ID en Redis 
+- Se volvio al .codeclimate.yml original
+
 ## [v0.2.7] - 2024-09-10
 #### Añadido
 - Se agregaron nuevos test para main.py y board.py

@@ -1,100 +1,147 @@
-import sys                            # Importa el módulo sys para manejar argumentos del sistema.
-import unittest                       # Importa el módulo unittest para ejecutar pruebas unitarias.
+import sys                              # Manejo de argumentos del sistema.
+import unittest                         # Para ejecutar pruebas unitarias.
+import redis                            # Para conectarse con la base de datos Redis.
+import pickle                           # Para serializar/deserializar objetos complejos.
+from board.board import Board            # Clase Board que representa el tablero.
+from pieces.king import King             # Clase para la pieza King.
+from pieces.pawn import Pawn             # Clase para la pieza Pawn.
+from pieces.rook import Rook             # Clase para la pieza Rook.
+from pieces.knight import Knight         # Clase para la pieza Knight.
+from pieces.bishop import Bishop         # Clase para la pieza Bishop.
+from pieces.queen import Queen           # Clase para la pieza Queen.
 
-from board.board import Board          # Importa la clase Board, que representa el tablero de ajedrez.
-from pieces.pawn import Pawn           # Importa la clase Pawn, que representa la pieza del peón.
-from pieces.rook import Rook           # Importa la clase Rook, que representa la pieza de la torre.
-from pieces.knight import Knight       # Importa la clase Knight, que representa la pieza del caballo.
-from pieces.bishop import Bishop       # Importa la clase Bishop, que representa la pieza del alfil.
-from pieces.queen import Queen         # Importa la clase Queen, que representa la pieza de la reina.
-from pieces.king import King           # Importa la clase King, que representa la pieza del rey.
 
 
-# ===== Clase principal que controla la lógica del juego de ajedrez. =====
+
+# ===== Clase principal para el manejo del juego de ajedrez =====
 class Chess:
 
 
-    # ===== Inicializa el tablero de ajedrez, el turno inicial y la puntuación de los jugadores. =====
-    def __init__(self):
-
-        self.__board__ = Board()               # Crea una instancia de la clase Board para manejar el tablero.
-        self.__current_turn__ = 'white'        # Define que el turno inicial es para las piezas blancas.
-        self.__score__ = {'white': 0, 'black': 0}  # Inicializa un diccionario para llevar el puntaje de ambos jugadores.
+    def __init__(self, game_id=None):
+        self.redis_client = redis.Redis(host='localhost', port=6379, db=0)  # Conexión a Redis.
+        self.game_id = game_id or "default_game"  # Identificador único para la partida.
 
 
-    # ===== Inicia el juego y maneja el ciclo principal del juego, permitiendo a los jugadores ingresar comandos. =====
+        if game_id:  # Si se proporciona un game_id, intenta cargar la partida guardada.
+            if self.load_game():  # Si la carga es exitosa, no inicializa el juego.
+                return
+
+
+        self.__board__ = Board()                # Crea el tablero de ajedrez.
+        self.__current_turn__ = 'white'         # Turno inicial para el jugador con piezas blancas.
+        self.__score__ = {'white': 0, 'black': 0}  # Puntuación inicial de ambos jugadores.
+
+
+    # ===== Inicia el ciclo principal del juego =====
     def start(self):
-
-        while True:                            # Bucle infinito que mantiene el juego activo.
-            self.__board__.display()           # Muestra el tablero de ajedrez en su estado actual.
-            print(f"Turno actual: {self.__current_turn__}")  # Indica de quién es el turno actual.
-            print(f"Puntaje - Blanco: {self.__score__['white']}, Negro: {self.__score__['black']}")  # Muestra el puntaje de ambos jugadores.
-            command = input("Introduce tu movimiento o comando ('mover origen destino', 'salir'): ")  # Solicita al jugador ingresar un comando.
-
-            if command == 'salir':             # Si el jugador ingresa 'salir', se termina el juego.
-                print("Gracias por jugar.")    # Muestra un mensaje de despedida.
-                exit()                         # Cierra el programa.
-
-            self.handle_command(command)       # Procesa el comando ingresado por el jugador.
+        while True:                               # Bucle principal del juego.
+            self.__board__.display()              # Muestra el tablero.
+            print(f"Turno actual: {self.__current_turn__}")  # Muestra el turno actual.
+            print(f"Puntaje - Blanco: {self.__score__['white']}, Negro: {self.__score__['black']}")  # Muestra el puntaje.
 
 
-    # ===== Procesa el comando ingresado por el jugador y realiza la acción correspondiente. =====
+            command = input("Introduce tu movimiento o comando ('mover origen destino', 'capturas', 'guardar', 'salir'): ")
+
+
+            if command == 'salir':               # Si el jugador decide salir, termina el juego.
+                print("Gracias por jugar.")
+                exit()
+           
+            elif command == 'guardar':           # Si el jugador elige 'guardar', guarda el estado del juego.
+                self.save_game()
+                print("Juego guardado correctamente.")
+                continue
+           
+            elif command == 'capturas':          # Muestra las piezas capturadas.
+                self.show_captured_pieces()
+                continue
+           
+            self.handle_command(command)         # Maneja los movimientos del jugador.
+
+
+    # ===== Guarda el estado actual del juego en Redis =====
+    def save_game(self):
+        game_state = {
+            'board': pickle.dumps(self.__board__),  # Serializa el objeto del tablero.
+            'current_turn': self.__current_turn__,  # Almacena el turno actual.
+            'score': self.__score__                # Almacena el puntaje actual.
+        }
+        self.redis_client.hmset(self.game_id, game_state)  # Guarda el estado en Redis.
+
+
+    # ===== Carga el estado del juego desde Redis =====
+    def load_game(self):
+        game_state = self.redis_client.hgetall(self.game_id)  # Obtiene el estado del juego desde Redis.
+        if not game_state:
+            print("No hay partida guardada con este ID.")
+            return False
+       
+        self.__board__ = pickle.loads(game_state[b'board'])  # Deserializa el tablero.
+        self.__current_turn__ = game_state[b'current_turn'].decode('utf-8')  # Restaura el turno.
+        self.__score__ = eval(game_state[b'score'].decode('utf-8'))  # Restaura el puntaje.
+        print(f"Partida {self.game_id} cargada correctamente.")
+        return True
+
+
+    # ===== Procesa el comando del jugador =====
     def handle_command(self, command):
-        
-        """
-        Parámetros:
-        - command: string que contiene el comando del jugador (por ejemplo, 'mover e2 e4').
-        """
+        parts = command.split()                             # Divide el comando en partes.
+        if len(parts) == 3 and parts[0] == 'mover':         # Si el comando es un movimiento válido.
+            start, end = parts[1], parts[2]                 # Extrae las posiciones de inicio y fin.
+            captured_piece = self.__board__.move_piece(start, end, self.__current_turn__)  # Realiza el movimiento.
 
-        parts = command.split()                # Divide el comando en partes (ejemplo: 'mover e2 e4' en ['mover', 'e2', 'e4']).
-        if len(parts) == 3 and parts[0] == 'mover':  # Verifica que el comando sea un movimiento válido.
-            start, end = parts[1], parts[2]    # Asigna las posiciones de inicio y fin del movimiento.
-            captured_piece = self.__board__.move_piece(start, end, self.__current_turn__)  # Intenta mover la pieza y obtener la pieza capturada.
-            if captured_piece:                 # Si una pieza fue capturada, actualiza el puntaje.
+
+            if captured_piece:                              # Si una pieza es capturada, actualiza el puntaje.
                 self.update_score(captured_piece)
-            self.toggle_turn()                 # Si el movimiento es válido, cambia el turno al otro jugador.
+                if isinstance(captured_piece, King):        # Si el rey es capturado, el juego termina.
+                    print(f"El {captured_piece.color} Rey ha sido capturado. ¡El juego ha terminado!")
+                    exit()
+           
+            self.toggle_turn()                              # Cambia el turno al siguiente jugador.
         else:
-            print("Comando no válido. Ejemplo de uso: 'mover e2 e4'")  # Muestra un mensaje de error si el comando no es válido.
+            print("Comando no válido. Ejemplo de uso: 'mover e2 e4'")
 
 
-    # ===== Cambia el turno actual del jugador, alternando entre 'white' y 'black'. =====
+    # ===== Cambia el turno entre jugadores =====
     def toggle_turn(self):
-        self.__current_turn__ = 'black' if self.__current_turn__ == 'white' else 'white'  # Alterna entre los turnos blanco y negro.
+        self.__current_turn__ = 'black' if self.__current_turn__ == 'white' else 'white'
 
 
-    # ===== Actualiza el puntaje del jugador que captura una pieza y muestra el puntaje ganado. =====
+    # ===== Actualiza el puntaje del jugador =====
     def update_score(self, piece_captured):
-
-        """
-        Parámetros:
-        - piece_captured: la pieza que fue capturada.
-        """
-
-        piece_values = {
-            'Pawn': 1,      # Peón (P)
-            'Knight': 3,    # Caballo (N)
-            'Bishop': 3,    # Alfil (B)
-            'Rook': 5,      # Torre (R)
-            'Queen': 9      # Reina (Q)
-        }  
-        
-        
-        captured_piece_value = piece_values.get(piece_captured.__class__.__name__, 0) # Obtiene el nombre de la clase de la pieza capturada (por ejemplo, 'Pawn', 'Knight') y busca su valor.
-        
-        self.__score__[self.__current_turn__] += captured_piece_value # Añade el valor de la pieza capturada al puntaje del jugador actual.
-
-        print(f"¡Has ganado {captured_piece_value} puntos por capturar un {piece_captured.__class__.__name__}!") # Muestra el puntaje ganado al capturar la pieza.
+        piece_values = {           # Define el valor de cada pieza.
+            'Pawn': 1,
+            'Knight': 3,
+            'Bishop': 3,
+            'Rook': 5,
+            'Queen': 9
+        }
+        captured_piece_value = piece_values.get(piece_captured.__class__.__name__, 0)
+        self.__score__[self.__current_turn__] += captured_piece_value
+        print(f"¡Has ganado {captured_piece_value} puntos por capturar un {piece_captured.__class__.__name__}!")
 
 
-# ===== Ejecución del juego o ejecución de tests =====
-if __name__ == "__main__":                      # Verifica si el archivo se está ejecutando directamente.
-    if len(sys.argv) > 1 and sys.argv[1] == "test":  # Si se pasa el argumento 'test', ejecuta las pruebas unitarias.
-        loader = unittest.TestLoader()          # Crea un cargador de pruebas unitarias.
-        tests = loader.discover('tests')        # Descubre y carga todas las pruebas en el directorio 'tests'.
-        testRunner = unittest.TextTestRunner()  # Crea un ejecutor de pruebas unitarias que muestra los resultados en texto.
-        testRunner.run(tests)                   # Ejecuta todas las pruebas descubiertas.
+    # ===== Muestra las piezas capturadas por cada jugador =====
+    def show_captured_pieces(self):
+        white_captures = [piece.symbol() for piece in self.__board__.get_captured_pieces('white')]
+        black_captures = [piece.symbol() for piece in self.__board__.get_captured_pieces('black')]
+        print(f"Piezas capturadas por blanco: {' '.join(black_captures) if black_captures else 'Ninguna'}")
+        print(f"Piezas capturadas por negro: {' '.join(white_captures) if white_captures else 'Ninguna'}")
+
+
+
+
+# ===== Inicia el juego o ejecuta pruebas =====
+if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "test":
+        loader = unittest.TestLoader()
+        tests = loader.discover('tests')
+        testRunner = unittest.TextTestRunner()
+        testRunner.run(tests)
     else:
-        game = Chess()                          # Si no se pasa el argumento 'test', inicia el juego de ajedrez.
-        game.start()                            # Llama al método start() para iniciar el ciclo del juego.
+        game_id = input("Introduce el ID de la partida o presiona enter para iniciar una nueva: ")
+        game = Chess(game_id if game_id else None)  # Inicia una nueva partida o carga la existente.
+        game.start()
+
 
 #Albarracín Gonzalo Nahuel
