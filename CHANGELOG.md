@@ -1,145 +1,194 @@
 # Changelog
-Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
+This file documents all significant changes made to this chess project.
+
+
+## [v0.3.0] - 2024-10-03
+#### Added
+- PyGame fully functional removed from main
+- Test coverage was modified
+- English translation added
+- Redis update
+
 
 ## [v0.2.9] - 2024-10-02
-#### Añadido
-- Se actualizo un print de Consola y se volvio a testear todos los archivos
-- Actualización configuracion de CircleCI (instalación de REDIS)
+#### Added
+- Updated a Console print and retested all files.
+- Updated CircleCI configuration (REDIS installation)
+
 
 ## [v0.2.8] - 2024-10-01
-#### Añadido
-- Se actualizo codigo main correspondiente a las capturas mostradas en la terminal
-- Se actualizo codigo del Rey 
-- Se agrego Guardado de partida local mediante ID en Redis 
-- Se volvio al .codeclimate.yml original
+#### Added
+- Updated main code corresponding to the screenshots shown in the terminal.
+- Updated King code
+- Added local game save via ID in Redis
+- Reverted to the original .codeclimate.yml
+
 
 ## [v0.2.7] - 2024-09-10
-#### Añadido
-- Se agregaron nuevos test para main.py y board.py
-- Se actualizo y corigió los comentarios con su respectivo titulo en todos los codigos
-- Se arreglo la ubicacion de las imagenes del codigo hecho en pygame
+#### Added
+- Added new tests for main.py and board.py
+- Updated and corrected the comments with their respective title in all codes
+- Fixed the location of the images in the code made in pygame
+
 
 ## [v0.2.6] - 2024-09-09
-#### Añadido
-- se elimino los tests de main y board debidos a errores con su ejecucion 
+#### Added
+- Removed main and board tests due to errors with their execution.
+
 
 ## [v0.2.5] - 2024-09-08
-#### Añadido
-- Principios SOLID para main.py y board.py
-- Puntajes de las piezas
-- Mensaje al eliminar pieza
+#### Added
+- SOLID principles for main.py and board.py
+- Part scores
+- Message when deleting part
 
-#### Proximamente
-- Actualizacion de test para main y board
+
+#### Coming soon
+- Test update for main and board
+
 
 ## [v0.2.4] - 2024-09-07
-#### Añadido
-- se agregaron mas comentarios en el funcionamiento de codigo para el ajedrez en consola
-- se agrego el ajedrez con interfas grafica pygame sin modular debido a que no esta respondiendo como se esperaba de forma local.
+#### Added
+- added more comments in the code operation for chess in console
+- added chess with pygame graphical interface without modular because it is not responding as expected locally.
+
 
 ## [v0.2.3] - 2024-09-06
-#### Añadido
+#### Added
 
-- Se agregaron comentarios en el funcionamiento del codigo
-- Se actualizo el README principal
+
+- Added comments on the code operation.
+- Updated the main README
+
 
 ## [v0.2.2] - 2024-09-05
-#### Añadido
+#### Added
 
-- Se mejoro la logica de la pieza Reina
-- Se agregaron test para main.py y piece.py
+
+- Improved the logic of the Queen part
+- Added tests for main.py and piece.py
+
 
 ## [v0.2.1] - 2024-09-04
-#### Añadido
+#### Added
 
-- Se corrigio tests y configuraciones para el buen funcionamiento de Circleci
+
+- Fixed tests and configurations for Circleci to run properly
+
 
 ## [v0.2.0] - 2024-09-03
-#### Añadido
+#### Added
 
-- Se agrego una nueva branch con el codigo pygame
 
-#### Modificado
+- Added a new branch with the pygame code
 
-- Se modifico la rama main
-- Se actualizaron los archivos de forma modular y para mas legibilidad
+
+#### Modified
+
+
+- Modified the main branch
+- Updated the files in a modular way and for more readability
+
 
 ## [v0.1.9] - 2024-09-02
-#### Añadido
-- Se reorganiza y se actualiza el orden de la carpeta Pygame
+#### Added
+- Reorganized and updated the order of Pygame folder
+
 
 ## [v0.1.8] - 2024-09-1
-#### Añadido
-- Se agregaron nuevos tets y se comprobo su buen funcionamiento para Ajedrez Consola
+#### Added
+- Added new tets and tested them for Console Chess
+
 
 ## [v0.1.7] - 2024-08-31
-#### Añadido
-- Se actualizó el codigo de Ajedrez en consola y tests
-- Se actualizó formate de CHANGELOG.md
+#### Added
+- Updated the Chess code in console and tests.
+- Updated CHANGELOG.md formatting
+
 
 ## [v0.1.6] - 2024-08-30
-#### Añadido
-- Se crearon las carpetas para la reorganizacion del Ajedrez para una mejor lectura y funcionamiento
+#### Added
+- Chess reorganization folders were created for better readability and performance
+
+
 
 
 ## [v0.1.5] - 2024-08-29
-### Añadido
-- Se agregan las piesas y se corrobora el buen funcionamiento de la app
+### Added
+- Added the feet and check the proper functioning of the app
+
 
 ## [v0.1.4] - 2024-08-28
-### Añadido
-- Se agrega los simientos para correr el proyecto de ajedrez mediante consola
+### Added
+- Added the seeds to run the chess project through the console
+
+
 
 
 ## [v0.1.3] - 2024-08-26
-### Añadido
-- Se actualizó el main.py agregando manejo de eventos, bucle principal del juego, cuadrado parpadeante alrededor del rey si está en jaque, mensaje de "game over" y opción de reinicio,
+### Added
+- Updated main.py adding event handling, main game loop, blinking square around king if in check, “game over” message and restart option,
 
-### Modificado
-- Se actualizó la organización del proyecto al igual que los comentarios en el codigo para saber el funcionamiento de cada linea.
 
-### Corregido
-- Corrección de errores menores.
+### Modified
+- Updated the organization of the project as well as the comments in the code to know how each line works.
+
+
+### Fixed
+- Minor bug fixes.
+
 
 ## [v0.1.2] - 2024-08-25
-### Añadido
-- Se actualizó el main.py agregando movimientos y restricciones de las piezas
+### Added
+- Updated the main.py adding movements and constraints of the pieces.
 
-### Modificado
-- Se actualizo la organización del proyecto.
+
+### Modified
+- Updated the project organization.
+
 
 ## [v0.1.1] - 2024-08-24
 
-### Añadido
-- Se agregan imagenes de las piezas en el repositorio y en el codigo
-- Se agregan test probados con el proyecto ya terminado en Local.
 
-### Modificado
-- Se actualizo la organización del proyecto.
+### Added
+- Added images of the parts in the repository and in the code.
+- Added tested tests with the finished project in Local.
 
-### Modificado
-- Corrección de errores menores.
+
+### Modified
+- Updated the project organization.
+
+
+### Modified
+- Minor bug fixes.
+
+
 
 
 ## [v0.1.0] - 2024-08-23
 
-### Añadido anteriormente
-- Configuración inicial de Pygame para la ventana principal del juego.
-- Configuración de CircleCI para integración continua y pruebas automáticas en cada commit.
-- Creación del archivo README con instrucciones detalladas para la instalación, ejecución y contribución al proyecto.
 
-### Añadido
-- Definición de variables clave para el manejo del estado del tablero y control del flujo de juego.
-- Añadido archivo Dockerfile para contenerizar la aplicación y facilitar su despliegue en diferentes entornos.
+### Added earlier
+- Initial Pygame configuration for main game window.
+- CircleCI configuration for continuous integration and automatic testing on each commit.
+- Creation of README file with detailed instructions for installation, execution and contribution to the project.
+
+
+### Added
+- Defined key variables for dashboard state management and game flow control.
+- Added Dockerfile to containerize the application and facilitate its deployment in different environments.
 - CHANGELOG
 
-### Modificado
-- Se actualizaron la organización del proyecto para facilitar futuras expansiones.
 
-### Corregido
-- Corrección de errores menores relacionados con la inicialización de Pygame.
+### Modified
+- Updated the project organization to facilitate future expansions.
 
-### Próximamente
-- Implementación de la lógica de juego, incluyendo validación de movimientos y detección de jaque y jaque mate.
-- Mejora de la interfaz de usuario y experiencia de juego.
-- Una inteligencia artificial para juego contra la computadora.
+
+### Fixed
+- Minor bug fixes related to Pygame initialization.
+
+
+### Coming soon
+- Implemented game logic, including move validation and check and checkmate detection.
+- Improved user interface and game experience.
+- An artificial intelligence for play against the computer.

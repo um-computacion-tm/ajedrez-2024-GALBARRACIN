@@ -3,7 +3,7 @@ from pieces.queen import Queen
 from pieces.pawn import Pawn
 
 class TestQueen(unittest.TestCase):
-    
+   
     def setUp(self):
         self.board = [[None for _ in range(8)] for _ in range(8)]
         self.queen = Queen('white')
@@ -13,7 +13,7 @@ class TestQueen(unittest.TestCase):
     # ===== Movimiento horizontal válido =====
     def test_horizontal_move(self):
         self.assertTrue(self.queen.is_valid_move(3, 3, 3, 7, self.board))  # d4 -> h4
-        
+       
         # Movimiento horizontal bloqueado
         self.board[3][5] = Pawn('white')
         self.assertFalse(self.queen.is_valid_move(3, 3, 3, 7, self.board))  # d4 -> h4 (bloqueado por peón en f4)

@@ -5,36 +5,45 @@
 # CircleCI
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/um-computacion-tm/ajedrez-2024-GALBARRACIN/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/um-computacion-tm/ajedrez-2024-GALBARRACIN/tree/main)
 
+
 # Maintainability
 <a href="https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-GALBARRACIN/maintainability"><img src="https://api.codeclimate.com/v1/badges/a09c36083ee9024ac9bc/maintainability" /></a>
+
 
 # Test Coverage
 <a href="https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-GALBARRACIN/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a09c36083ee9024ac9bc/test_coverage" /></a>
 
-## Contenido
 
-El contenido se basa en dos proyectos con los codigos completamente funcionales pertenecientes a un ajedrez realizado en consola, con sus tests y su estructura correspondiente. Y el otro proyecto esta echo graficamente mediante pygame para ser mas amigable con el usuario.
+## Content
 
-### Proyecto de Ajedrez en Consola - Python
-## Funcionamiento
 
-Este proyecto es una implementación del juego de ajedrez en la consola utilizando Python. El objetivo principal es crear un juego funcional y accesible, que permita a dos jugadores enfrentarse de manera interactiva.
+The content is based on two projects with fully functional codes belonging to a chess made in console, with its tests and its corresponding structure. And the other project is made graphically using pygame to be more user friendly (located in another branch).
 
-## Características
-- Juego completamente funcional con todas las reglas estándar del ajedrez.
-- Interfaz en la consola para introducir comandos y mover las piezas.
-- Verificación automática de reglas como jaque, jaque mate y tablas.
-- Cambio de turnos entre jugadores de manera automática.
-- Puntuación actualizable al final de cada partida.
-- Soporte para pruebas unitarias, ejecutables con el comando test para garantizar la estabilidad y calidad del código.
-- Estructura modular que facilita el mantenimiento y la adición de nuevas funcionalidades.
 
-## Tecnologías Utilizadas:
+### Console Chess Project - Python
+## How it works
+
+
+This project is an implementation of the console chess game using Python. The main goal is to create a functional and accessible game, which allows two players to face each other in an interactive way.
+
+
+## Features
+- Fully functional game with all standard chess rules.
+- Console interface for entering commands and moving pieces.
+- Automatic verification of rules such as check, checkmate and draw.
+- Automatic turn switching between players.
+- Updatable score at the end of each game.
+- Support for unit tests, executable with the test command to ensure code stability and quality.
+- Modular structure that facilitates maintenance and the addition of new features.
+
+
+## Technologies Used:
 - Python 3
-- Sistema de pruebas unitarias con unittest
-- Soporte de cobertura de código para asegurar un desarrollo con altos estándares de calidad.
+- Unit test system with unittest
+- Code coverage support to ensure development with high quality standards.
 
-### Ajedrez PYGAME
 
-- Incluye un ajedrez diseñado en pygame, es más estetico e intuitivo para el usuario.
+### PYGAME Chess
 
+
+- Includes a chess designed in pygame, it is more aesthetic and intuitive for the user. (it is in another branch due to an error in Visual Studio Local when trying to restructure it)

@@ -1,9 +1,10 @@
-# tests/test_rook.py
 import unittest
 from pieces.rook import Rook
 from pieces.piece import Piece
 
+
 class TestRook(unittest.TestCase):
+
 
     # ===== Configuración básica con un tablero vacío =====
     def setUp(self):
@@ -25,12 +26,12 @@ class TestRook(unittest.TestCase):
 
 
     # ===== Movimiento diagonal no válido =====
-    def test_invalid_move_diagonal(self): 
+    def test_invalid_move_diagonal(self):
         self.assertFalse(self.rook_white.is_valid_move(0, 0, 5, 5, self.empty_board))
         self.assertFalse(self.rook_black.is_valid_move(7, 7, 2, 2, self.empty_board))
 
 
-    # ===== Movimiento con un obstáculo en el camino horizontal=====
+    # ===== Movimiento con un obstáculo en el camino horizontal =====
     def test_invalid_move_with_obstacle_horizontal(self):
         self.empty_board[0][3] = Piece('black')  # Colocamos un obstáculo en la posición (0, 3)
         self.assertFalse(self.rook_white.is_valid_move(0, 0, 0, 5, self.empty_board))
