@@ -1,5 +1,4 @@
-
-# pieces/queen.py
+ # pieces/queen.py
 from pieces.piece import Piece
 
 # ===== Clase para la pieza de la Reina. =====
@@ -12,22 +11,24 @@ class Queen(Piece):
         # Diferencias de filas y columnas
         row_diff = abs(end_row - start_row)
         col_diff = abs(end_col - start_col)
-
-        # Verifica si el destino es válido y el movimiento es horizontal, vertical o diagonal
+        
+        # Verifica si el destino es válido
         if not self._is_destination_valid(end_row, end_col, board):
             return False
-        
-        if self._is_horizontal_move(row_diff, col_diff):
-            return self._is_clear_horizontal_path(start_row, start_col, end_col, board)
-        elif self._is_vertical_move(row_diff, col_diff):
-            return self._is_clear_vertical_path(start_row, start_col, end_row, board)
-        elif self._is_diagonal_move(row_diff, col_diff):
-            return self._is_clear_diagonal_path(start_row, start_col, end_row, end_col, board)
 
-        return False
+        # Verifica si el movimiento es válido (horizontal, vertical o diagonal) y si el camino está despejado
+        valid_move = False
+        if self._is_horizontal_move(row_diff, col_diff):
+            valid_move = self._is_clear_path(start_row, start_col, end_row, end_col, board, "horizontal")
+        elif self._is_vertical_move(row_diff, col_diff):
+            valid_move = self._is_clear_path(start_row, start_col, end_row, end_col, board, "vertical")
+        elif self._is_diagonal_move(row_diff, col_diff):
+            valid_move = self._is_clear_path(start_row, start_col, end_row, end_col, board, "diagonal")
+
+        return valid_move
 
     def _is_destination_valid(self, end_row, end_col, board):
-        return (board[end_row][end_col] is None or board[end_row][end_col].color != self.color)
+        return board[end_row][end_col] is None or board[end_row][end_col].color != self.color
 
     def _is_horizontal_move(self, row_diff, col_diff):
         return row_diff == 0 and col_diff > 0
@@ -38,28 +39,22 @@ class Queen(Piece):
     def _is_diagonal_move(self, row_diff, col_diff):
         return row_diff == col_diff
 
-    # Refactorización del método _is_clear_path en tres métodos más simples
-    def _is_clear_horizontal_path(self, start_row, start_col, end_col, board):
-        step = 1 if end_col > start_col else -1
-        for col in range(start_col + step, end_col, step):
-            if board[start_row][col] is not None:
-                return False
-        return True
+    # Unificar la lógica de verificación de caminos
+    def _is_clear_path(self, start_row, start_col, end_row, end_col, board, direction):
+        row_step, col_step = 0, 0
+        if direction == "horizontal":
+            col_step = 1 if end_col > start_col else -1
+        elif direction == "vertical":
+            row_step = 1 if end_row > start_row else -1
+        elif direction == "diagonal":
+            row_step = 1 if end_row > start_row else -1
+            col_step = 1 if end_col > start_col else -1
 
-    def _is_clear_vertical_path(self, start_row, start_col, end_row, board):
-        step = 1 if end_row > start_row else -1
-        for row in range(start_row + step, end_row, step):
-            if board[row][start_col] is not None:
-                return False
-        return True
-
-    def _is_clear_diagonal_path(self, start_row, start_col, end_row, end_col, board):
-        row_step = 1 if end_row > start_row else -1
-        col_step = 1 if end_col > start_col else -1
         row, col = start_row + row_step, start_col + col_step
-        while row != end_row and col != end_col:
+        while row != end_row or col != end_col:
             if board[row][col] is not None:
                 return False
             row += row_step
             col += col_step
+
         return True
