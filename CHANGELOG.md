@@ -1,6 +1,11 @@
 # Changelog
 Este archivo documenta todos los cambios significativos realizados en este proyecto de ajedrez.
 
+## [v0.2.9] - 2024-10-02
+#### Añadido
+- Se actualizo un print de Consola y se volvio a testear todos los archivos
+- Actualización configuracion de CircleCI (instalación de REDIS)
+
 ## [v0.2.8] - 2024-10-01
 #### Añadido
 - Se actualizo codigo main correspondiente a las capturas mostradas en la terminal

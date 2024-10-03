@@ -40,7 +40,7 @@ class Chess:
             print(f"Puntaje - Blanco: {self.__score__['white']}, Negro: {self.__score__['black']}")  # Muestra el puntaje.
 
 
-            command = input("Introduce tu movimiento o comando ('mover origen destino', 'capturas', 'guardar', 'salir'): ")
+            command = input("Introduce tu movimiento o comando ('mover <origen> <destino>', 'capturas', 'guardar', 'salir'): ")
 
 
             if command == 'salir':               # Si el jugador decide salir, termina el juego.
@@ -62,25 +62,26 @@ class Chess:
     # ===== Guarda el estado actual del juego en Redis =====
     def save_game(self):
         game_state = {
-            'board': pickle.dumps(self.__board__),  # Serializa el objeto del tablero.
-            'current_turn': self.__current_turn__,  # Almacena el turno actual.
-            'score': self.__score__                # Almacena el puntaje actual.
+            'board': pickle.dumps(self.__board__),      # Serializa el objeto del tablero.
+            'current_turn': self.__current_turn__,      # Almacena el turno actual.
+            'score': self.__score__                    # Almacena el puntaje actual.
         }
-        self.redis_client.hmset(self.game_id, game_state)  # Guarda el estado en Redis.
+        # Guardamos cada campo del estado del juego en Redis usando hset()
+        for key, value in game_state.items():
+            self.redis_client.hset(self.game_id, key, value)  # Guarda los datos en Redis
+        print("Partida guardada correctamente.")
 
 
-    # ===== Carga el estado del juego desde Redis =====
+    # ===== Carga el estado del juego desde Redis si existe =====
     def load_game(self):
-        game_state = self.redis_client.hgetall(self.game_id)  # Obtiene el estado del juego desde Redis.
-        if not game_state:
-            print("No hay partida guardada con este ID.")
-            return False
-       
-        self.__board__ = pickle.loads(game_state[b'board'])  # Deserializa el tablero.
-        self.__current_turn__ = game_state[b'current_turn'].decode('utf-8')  # Restaura el turno.
-        self.__score__ = eval(game_state[b'score'].decode('utf-8'))  # Restaura el puntaje.
-        print(f"Partida {self.game_id} cargada correctamente.")
-        return True
+        if self.redis_client.exists(self.game_id):  # Verifica si existe un estado guardado
+            game_state = self.redis_client.hgetall(self.game_id)
+            self.__board__ = pickle.loads(game_state[b'board'])  # Carga el tablero deserializado
+            self.__current_turn__ = game_state[b'current_turn'].decode('utf-8')  # Carga el turno actual
+            self.__score__ = pickle.loads(game_state[b'score'])  # Carga el puntaje
+            print("Partida cargada correctamente.")
+        else:
+            print("No se encontró una partida guardada.")
 
 
     # ===== Procesa el comando del jugador =====

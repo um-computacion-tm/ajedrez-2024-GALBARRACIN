@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.1 
 jobs:
   build:
     docker:
@@ -13,7 +13,9 @@ jobs:
             ./cc-test-reporter before-build
       - run:
           name: Install dependencies
-          command: pip install -r requirements.txt
+          command: |
+            pip install -r requirements.txt
+            pip install redis  # Instala el módulo redis
       - run:
           name: Run tests
           command: |
