@@ -18,6 +18,9 @@ class FakeBoard:
     def display(self):
         pass  # Método agregado para evitar el error en test_start_exit
 
+    def get_captured_pieces(self, color):
+        return []  # Lista vacía por defecto para piezas capturadas
+
 # Clase simulada de pieza para devolver símbolos de piezas capturadas
 class FakePiece:
     def __init__(self, symbol):
@@ -136,6 +139,28 @@ class TestChess(unittest.TestCase):
 
             self.assertFalse(result)
             mocked_print.assert_called_with("Datos incompletos en la partida guardada.")
+
+    # ===== Prueba que el juego puede empezar sin conexión a Redis =====
+    def test_start_without_redis(self):
+        # Simula que no se puede conectar a Redis
+        with patch('redis.Redis', side_effect=redis.ConnectionError), patch('builtins.print') as mocked_print:
+            game = Chess()  # Inicia el juego sin Redis
+            mocked_print.assert_called_with("No se pudo conectar a Redis. Continuando sin Redis...")
+
+    # ===== Prueba que un movimiento capturando una pieza de valor actualiza el score y termina si es un Rey =====
+    def test_handle_command_capture_king(self):
+        valid_command = "mover e2 e4"
+        self.chess_game.__current_turn__ = 'white'
+
+        # Simula la captura de un Rey negro
+        captured_piece = King('black')
+        self.chess_game.__board__.move_piece = MagicMock(return_value=captured_piece)
+
+        with patch('builtins.print') as mocked_print, patch.object(self.chess_game, 'toggle_turn'):
+            with self.assertRaises(SystemExit):  # El juego debe terminar cuando se captura el Rey
+                self.chess_game.handle_command(valid_command)
+                self.chess_game.__board__.move_piece.assert_called_once_with('e2', 'e4', 'white')
+                mocked_print.assert_any_call("El black Rey ha sido capturado. ¡El juego ha terminado!")
 
 
 if __name__ == "__main__":
