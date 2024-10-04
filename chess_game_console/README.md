@@ -17,7 +17,7 @@ Instalar Redis (pip install)
 Clona este repositorio o descarga la carpeta "chess_game_console" manualmente en tu máquina.
 
 
-Ejecuta el archivo chess.py para iniciar el juego: " python chess.py"
+Ejecuta el archivo main.py para iniciar el juego: "main.py"
 
 
 # Interacción del Juego:
@@ -133,3 +133,24 @@ El juego permite a los jugadores ingresar un game_id para continuar una partida 
 
 
 Se ha añadido el comando guardar, que permite al jugador guardar el estado actual del juego en Redis y retomarlo más tarde.
+
+
+## Docker
+
+Para ejecutar el juego utilizando Docker. Sigue los siguientes pasos:
+
+1. **Instalar Docker**  
+   Si no tienes Docker instalado, ejecuta el siguiente comando:
+```bash
+    $ sudo apt install docker
+```
+2. **Crear la imagen de Docker del juego**  
+   Para construir la imagen Docker del juego, ejecuta:
+```bash
+    $ sudo docker buildx build -t ajedrez-2024-GALBARRACIN . --no-cache
+```
+3. **Ejecutar los tests e iniciar el juego**  
+   Una vez creada la imagen, puedes ejecutar el siguiente comando para correr los tests e iniciar el juego:
+```bash
+    $ sudo docker run -i ajedrez-2024-GALBARRACIN
+```
