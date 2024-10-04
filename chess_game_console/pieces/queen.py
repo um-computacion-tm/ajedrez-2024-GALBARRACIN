@@ -1,67 +1,65 @@
 # pieces/queen.py
-from pieces.piece import Piece
+from pieces.piece import Piece  # Importa la clase base Piece
 
 # ===== Clase para la pieza de la Reina =====
 class Queen(Piece):
     def symbol(self):
-        # Símbolo 'Q' para Reina blanca y 'q' para Reina negra
-        return 'Q' if self.color == 'white' else 'q'
+        """
+        Retorna el símbolo 'Q' para la Reina blanca y 'q' para la Reina negra.
+        """
+        return 'Q' if self.color == 'white' else 'q'  # Devuelve el símbolo dependiendo del color de la pieza
 
     def is_valid_move(self, start_row, start_col, end_row, end_col, board):
-        row_diff = abs(end_row - start_row)
-        col_diff = abs(end_col - start_col)
-
-        # Verifica si el destino es válido
-        if not self._is_destination_valid(end_row, end_col, board):
+        """
+        Verifica si un movimiento es válido para la Reina.
+        El movimiento es válido si:
+        - El destino es válido (no hay piezas del mismo color).
+        - Es un movimiento válido (horizontal, vertical o diagonal).
+        - El camino está despejado.
+        """
+        if not self._is_destination_valid(end_row, end_col, board):  # Verifica si el destino es válido
             return False
 
-        # Determina el tipo de movimiento
-        move_type = self._get_move_type(row_diff, col_diff)
+        move_type = self._get_move_type(start_row, start_col, end_row, end_col)  # Obtiene el tipo de movimiento
+        return move_type and self._is_path_clear(start_row, start_col, end_row, end_col, board, move_type)
+        # Verifica que el tipo de movimiento sea válido y que el camino esté despejado
 
-        # Verifica si el movimiento es válido y si el camino está despejado
-        return move_type is not None and move_type(start_row, start_col, end_row, end_col, board)
-
-    def _get_move_type(self, row_diff, col_diff):
-        if self._is_horizontal_move(row_diff, col_diff):
-            return self._is_clear_horizontal_path
-        elif self._is_vertical_move(row_diff, col_diff):
-            return self._is_clear_vertical_path
-        elif self._is_diagonal_move(row_diff, col_diff):
-            return self._is_clear_diagonal_path
-        return None
+    def _get_move_type(self, start_row, start_col, end_row, end_col):
+        """
+        Determina el tipo de movimiento basado en las diferencias de filas y columnas.
+        Retorna 'diagonal', 'horizontal' o 'vertical' según el movimiento, o None si no es válido.
+        """
+        row_diff, col_diff = abs(end_row - start_row), abs(end_col - start_col)  # Calcula la diferencia de filas y columnas
+        if row_diff == col_diff:  # Movimiento diagonal
+            return 'diagonal'
+        elif row_diff == 0:  # Movimiento horizontal
+            return 'horizontal'
+        elif col_diff == 0:  # Movimiento vertical
+            return 'vertical'
+        return None  # Si no cumple ninguna condición, no es un movimiento válido
 
     def _is_destination_valid(self, end_row, end_col, board):
-        destination_piece = board[end_row][end_col]
+        """
+        Verifica si el destino es válido, es decir, si no hay una pieza del mismo color en la posición de destino.
+        """
+        destination_piece = board[end_row][end_col]  # Obtiene la pieza en el destino
         return destination_piece is None or destination_piece.color != self.color
+        # El destino es válido si no hay pieza o si es de otro color
 
-    def _is_horizontal_move(self, row_diff, col_diff):
-        return row_diff == 0 and col_diff > 0
+    def _is_path_clear(self, start_row, start_col, end_row, end_col, board, move_type):
+        """
+        Verifica si el camino está despejado para el tipo de movimiento (horizontal, vertical o diagonal).
+        """
+        step = self._get_steps(start_row, start_col, end_row, end_col, move_type)  # Obtiene los pasos (incrementos) según el tipo de movimiento
+        return self.is_clear_path((start_row, start_col), (end_row, end_col), board, step)  # Usa el método común de Piece para verificar si el camino está despejado
 
-    def _is_vertical_move(self, row_diff, col_diff):
-        return col_diff == 0 and row_diff > 0
-
-    def _is_diagonal_move(self, row_diff, col_diff):
-        return row_diff == col_diff
-
-    def _is_clear_horizontal_path(self, start_row, start_col, end_row, end_col, board):
-        col_step = 1 if end_col > start_col else -1
-        return self._is_clear_linear_path(start_row, start_col, end_row, end_col, board, row_step=0, col_step=col_step)
-
-    def _is_clear_vertical_path(self, start_row, start_col, end_row, end_col, board):
-        row_step = 1 if end_row > start_row else -1
-        return self._is_clear_linear_path(start_row, start_col, end_row, end_col, board, row_step=row_step, col_step=0)
-
-    def _is_clear_diagonal_path(self, start_row, start_col, end_row, end_col, board):
-        row_step = 1 if end_row > start_row else -1
-        col_step = 1 if end_col > start_col else -1
-        return self._is_clear_linear_path(start_row, start_col, end_row, end_col, board, row_step=row_step, col_step=col_step)
-
-    # Método genérico para verificar si el camino está despejado en línea recta
-    def _is_clear_linear_path(self, start_row, start_col, end_row, end_col, board, row_step, col_step):
-        row, col = start_row + row_step, start_col + col_step
-        while row != end_row or col != end_col:
-            if board[row][col] is not None:
-                return False
-            row += row_step
-            col += col_step
-        return True
+    def _get_steps(self, start_row, start_col, end_row, end_col, move_type):
+        """
+        Calcula los pasos (incrementos) para las filas y columnas según el tipo de movimiento.
+        """
+        if move_type == 'horizontal':  # Si es movimiento horizontal
+            return 0, 1 if end_col > start_col else -1  # Columna se mueve, fila se mantiene
+        elif move_type == 'vertical':  # Si es movimiento vertical
+            return 1 if end_row > start_row else -1, 0  # Fila se mueve, columna se mantiene
+        elif move_type == 'diagonal':  # Si es movimiento diagonal
+            return 1 if end_row > start_row else -1, 1 if end_col > start_col else -1  # Tanto fila como columna se mueven en diagonal
