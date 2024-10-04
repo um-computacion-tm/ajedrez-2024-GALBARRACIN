@@ -1,49 +1,40 @@
 # pieces/piece.py
 
-# ===== Clase base para todas las piezas del ajedrez =====
 class Piece:
     def __init__(self, color):
-        # Color de la pieza (blanco o negro)
+        """
+        Inicializa una pieza de ajedrez con el color dado.
+        """
         self.color = color
 
-    # ===== Determina si el movimiento es válido ======
     def is_valid_move(self, start_row, start_col, end_row, end_col, board):
         """
-        Verifica si el movimiento es válido para la pieza.
-        Este método debe ser implementado por las clases hijas (piezas específicas).
+        Método que debe ser implementado por las subclases para verificar si un movimiento es válido.
         """
-        raise NotImplementedError("Este método debe ser implementado en las piezas específicas.")
+        raise NotImplementedError("Este método debe ser implementado por subclases.")
 
-    # ===== Devuelve el símbolo que representa la pieza =====
     def symbol(self):
         """
-        Devuelve el símbolo que representa la pieza.
-        Este método debe ser implementado por las clases hijas.
+        Método que debe ser implementado por las subclases para retornar el símbolo de la pieza.
         """
-        raise NotImplementedError("Este método debe ser implementado en las piezas específicas.")
+        raise NotImplementedError("Este método debe ser implementado por subclases.")
 
-    # ===== Verifica si el camino entre dos puntos está despejado =====
-    def is_clear_path(self, start_pos, end_pos, board, step):
+    def _is_within_board(self, start_row, start_col, end_row, end_col):
         """
-        Verifica si el camino entre dos posiciones está despejado.
-        Se mueve desde start_pos hasta end_pos en pasos definidos por `step`.
-        - start_pos: tupla (fila, columna) de la posición inicial.
-        - end_pos: tupla (fila, columna) de la posición final.
-        - board: el tablero de ajedrez.
-        - step: tupla (row_step, col_step) que indica la dirección del movimiento.
+        Verifica si las posiciones de inicio y fin están dentro de los límites del tablero.
         """
-        current_row, current_col = start_pos
-        end_row, end_col = end_pos
-        row_step, col_step = step
+        return all(0 <= pos < 8 for pos in [start_row, start_col, end_row, end_col])
 
-        # Mueve desde la posición inicial a la final, verificando si hay obstáculos en el camino
-        current_row += row_step
-        current_col += col_step
+    def is_clear_path(self, start, end, board, step):
+        """
+        Verifica si el camino entre las posiciones 'start' y 'end' está despejado en el tablero.
+        """
+        current_row, current_col = start[0] + step[0], start[1] + step[1]
 
-        while (current_row, current_col) != (end_row, end_col):
-            if board[current_row][current_col] is not None:  # Si hay una pieza en el camino, movimiento inválido
+        while (current_row, current_col) != end:
+            if board[current_row][current_col] is not None:
                 return False
-            current_row += row_step
-            current_col += col_step
-        
-        return True  # El camino está despejado
+            current_row += step[0]
+            current_col += step[1]
+
+        return True

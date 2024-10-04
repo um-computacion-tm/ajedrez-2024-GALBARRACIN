@@ -66,5 +66,25 @@ class TestQueen(unittest.TestCase):
         self.board[6][6] = Pawn('white')
         self.assertFalse(self.queen.is_valid_move(3, 3, 6, 6, self.board))  # d4 -> g7 (bloqueado por peón en g7)
 
+    # ===== Movimiento fuera del tablero =====
+    def test_move_out_of_bounds(self):
+        """
+        Verifica que un movimiento fuera de los límites del tablero sea inválido.
+        """
+        with self.subTest("Movimiento fuera de los límites en filas"):
+            self.assertFalse(self.queen.is_valid_move(3, 3, 8, 3, self.board))  # Fuera del tablero (fila)
+
+        with self.subTest("Movimiento fuera de los límites en columnas"):
+            self.assertFalse(self.queen.is_valid_move(3, 3, 3, 8, self.board))  # Fuera del tablero (columna)
+
+    # ===== No puede saltar piezas =====
+    def test_no_jumping(self):
+        """
+        Verifica que la Reina no pueda saltar sobre otras piezas.
+        """
+        # Bloqueo en el camino diagonal
+        self.board[4][4] = Pawn('white')
+        self.assertFalse(self.queen.is_valid_move(3, 3, 6, 6, self.board))  # d4 -> g7 (bloqueado por peón en e5)
+
 if __name__ == "__main__":
     unittest.main()
