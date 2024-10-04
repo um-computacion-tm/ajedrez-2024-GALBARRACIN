@@ -162,6 +162,25 @@ class TestChess(unittest.TestCase):
                 self.chess_game.__board__.move_piece.assert_called_once_with('e2', 'e4', 'white')
                 mocked_print.assert_any_call("El black Rey ha sido capturado. ¡El juego ha terminado!")
 
+    # ===== Prueba que muestra el mensaje correcto cuando hay un error de Redis al guardar =====
+    def test_save_game_redis_error(self):
+        with patch('builtins.print') as mocked_print:
+            # Simula un error de Redis al guardar el juego
+            self.chess_game.redis_client.hset.side_effect = redis.ConnectionError
+            self.chess_game.save_game()
+
+            mocked_print.assert_called_with("Error al guardar la partida: ")
+
+    # ===== Prueba que muestra el mensaje correcto cuando hay un error de Redis al cargar =====
+    def test_load_game_redis_error(self):
+        with patch('builtins.print') as mocked_print:
+            # Simula un error de Redis al cargar el juego
+            self.chess_game.redis_client.hgetall.side_effect = redis.ConnectionError
+            result = self.chess_game.load_game()
+
+            self.assertFalse(result)
+            mocked_print.assert_called_with("Error al cargar la partida: ")
+
 
 if __name__ == "__main__":
     unittest.main()
