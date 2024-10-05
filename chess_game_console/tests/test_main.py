@@ -181,5 +181,31 @@ class TestChess(unittest.TestCase):
             self.assertFalse(result)
             mocked_print.assert_called_with("Error al cargar la partida: ")
 
+    # ===== Prueba que previene la inicialización cuando ya hay un juego en progreso =====
+    @patch('main.redis.Redis')
+    def test_load_game_prevents_initialization(self, mock_redis):
+        # Simulamos una instancia de Redis que tiene una partida guardada.
+        mock_redis_instance = mock_redis.return_value
+        mock_redis_instance.ping.return_value = True
+        mock_redis_instance.exists.return_value = True
+        mock_redis_instance.hgetall.return_value = {
+            b'board': pickle.dumps(FakeBoard()),  # El tablero debe estar serializado correctamente.
+            b'current_turn': b'white',  # Simulamos que el turno es el correcto.
+            b'score': pickle.dumps({'white': 1, 'black': 0}),  # Simulamos que el puntaje también es correcto.
+        }
+
+        game_id = "test_game"  # Aseguramos que el ID sea consistente
+        chess_game = Chess(game_id=game_id)  # Inicializamos el juego con el mismo game_id
+
+        with patch('builtins.print') as mocked_print:
+            result = chess_game.load_game()
+
+            # Verificamos que la partida se cargue correctamente.
+            self.assertTrue(result, "La partida no se cargó correctamente, aunque Redis devolvió datos completos.")
+            
+            # Verificamos que el mensaje esperado se imprima.
+            mocked_print.assert_any_call("Partida cargada correctamente.")
+
+
 if __name__ == '__main__':
     unittest.main()
