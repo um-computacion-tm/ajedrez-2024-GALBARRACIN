@@ -181,6 +181,5 @@ class TestChess(unittest.TestCase):
             self.assertFalse(result)
             mocked_print.assert_called_with("Error al cargar la partida: ")
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
