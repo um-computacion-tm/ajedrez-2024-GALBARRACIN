@@ -1,4 +1,5 @@
-import unittest 
+
+import unittest
 from unittest.mock import patch, MagicMock, call
 from main import Chess
 from pieces.pawn import Pawn
@@ -10,6 +11,7 @@ from pieces.king import King
 from redis_manager import RedisManager
 
 
+# Simulaciones para el tablero y piezas para los tests
 class FakeBoard:
     def move_piece(self, start, end, turn):
         pass
@@ -26,6 +28,7 @@ class FakePiece:
 
     def symbol(self):
         return self.__symbol__
+
 
 class TestChess(unittest.TestCase):
 
@@ -147,4 +150,3 @@ class TestChess(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
