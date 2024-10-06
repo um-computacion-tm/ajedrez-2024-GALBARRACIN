@@ -1,6 +1,7 @@
-
 import unittest
 from unittest.mock import patch, MagicMock, call
+import sys
+import main  # Importa el archivo main.py
 from main import Chess
 from pieces.pawn import Pawn
 from pieces.rook import Rook
@@ -10,8 +11,7 @@ from pieces.queen import Queen
 from pieces.king import King
 from redis_manager import RedisManager
 
-
-# Simulaciones para el tablero y piezas para los tests
+# Fake objects for mocking
 class FakeBoard:
     def move_piece(self, start, end, turn):
         pass
@@ -28,7 +28,6 @@ class FakePiece:
 
     def symbol(self):
         return self.__symbol__
-
 
 class TestChess(unittest.TestCase):
 
@@ -147,6 +146,26 @@ class TestChess(unittest.TestCase):
             board, current_turn, score = self.chess_game.__redis_manager__.load_game()
             self.assertEqual(current_turn, 'black')
             self.assertEqual(score, {'white': 10, 'black': 15})
+
+class TestMainExecution(unittest.TestCase):
+    
+    @patch('unittest.TextTestRunner.run')  # Simula el método run de TextTestRunner
+    @patch('unittest.TestLoader.discover')  # Simula el método discover de TestLoader
+    @patch('sys.argv', ['main.py', 'test'])  # Simula el argumento de línea de comandos para el modo test
+    def test_run_in_test_mode(self, mock_discover, mock_run):
+        mock_tests = MagicMock()  # Crea un objeto mock para representar los tests descubiertos
+        mock_discover.return_value = mock_tests  # El discover devuelve los tests simulados
+
+        # Ejecuta manualmente el código en el bloque `if __name__ == "__main__"`
+        with patch('builtins.__import__', return_value=main):
+            if len(sys.argv) > 1 and sys.argv[1] == "test":
+                loader = unittest.TestLoader()
+                tests = loader.discover('tests')
+                testRunner = unittest.TextTestRunner()
+                testRunner.run(tests)
+
+        mock_discover.assert_called_once_with('tests')  # Verifica que discover fue llamado con 'tests'
+        mock_run.assert_called_once_with(mock_tests)  # Verifica que run fue llamado con los tests descubiertos
 
 if __name__ == '__main__':
     unittest.main()
