@@ -1,22 +1,20 @@
 # pieces/king.py
-from pieces.piece import Piece
 
+from pieces.piece import Piece
 
 # ===== Clase para la pieza del Rey. =====
 class King(Piece):
     def symbol(self):
         # Símbolo 'K' para Rey blanco y 'k' para Rey negro
-        return 'K' if self.color == 'white' else 'k'
+        return 'K' if self.__color__ == 'white' else 'k'
 
-
-    def is_valid_move(self, start_row, start_col, end_row, end_col, board):
+    def is_valid_move(self, __start_row__, __start_col__, __end_row__, __end_col__, __board__):
         # El Rey se mueve una casilla en cualquier dirección
-        row_diff = abs(end_row - start_row)
-        col_diff = abs(end_col - start_col)
-        return (row_diff <= 1 and col_diff <= 1)
-
+        __row_diff__ = abs(__end_row__ - __start_row__)
+        __col_diff__ = abs(__end_col__ - __start_col__)
+        return (__row_diff__ <= 1 and __col_diff__ <= 1)
 
     # ===== Nuevo método para verificar si el Rey ha sido capturado =====
     def captured(self):
-        print(f"¡El Rey {self.color} ha sido capturado! Fin del juego.")  # Mensaje de que el Rey ha sido capturado.
+        print(f"¡El Rey {self.__color__} ha sido capturado! Fin del juego.")  # Mensaje de que el Rey ha sido capturado.
         exit()  # Termina el juego inmediatamente.

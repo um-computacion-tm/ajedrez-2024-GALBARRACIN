@@ -1,14 +1,23 @@
 # pieces/knight.py
-from pieces.piece import Piece
+
+from pieces.piece import Piece  # Importa la clase base Piece
 
 # ===== Clase para la pieza del Caballo =====
-class Knight(Piece):
+class Knight(Piece):  # Define la clase Knight que hereda de Piece
+    # ===== Retorna el símbolo del Caballo =====
     def symbol(self):
-        # Símbolo 'N' para Caballo blanco y 'n' para Caballo negro
-        return 'N' if self.color == 'white' else 'n'
+        # Retorna 'N' si el Caballo es blanco, 'n' si es negro
+        return 'N' if self.__color__ == '__white__' else 'n'
 
-    def is_valid_move(self, start_row, start_col, end_row, end_col, board):
-        # El Caballo se mueve en forma de 'L': 2x1 o 1x2
-        row_diff = abs(end_row - start_row)
-        col_diff = abs(end_col - start_col)
-        return (row_diff == 2 and col_diff == 1) or (row_diff == 1 and col_diff == 2)
+    # ===== Verifica si el movimiento del Caballo es válido =====
+    def is_valid_move(self, __start_row__, __start_col__, __end_row__, __end_col__, __board__):
+        """
+        Verifica si el movimiento es válido para el Caballo.
+        El Caballo se mueve en forma de 'L', lo que significa que la diferencia entre las filas
+        y columnas debe ser de 2x1 o 1x2.
+        """
+        __row_diff__ = abs(__end_row__ - __start_row__)  # Calcula la diferencia entre las filas
+        __col_diff__ = abs(__end_col__ - __start_col__)  # Calcula la diferencia entre las columnas
+        
+        # Verifica si el movimiento sigue el patrón 'L': 2x1 o 1x2
+        return (__row_diff__ == 2 and __col_diff__ == 1) or (__row_diff__ == 1 and __col_diff__ == 2)

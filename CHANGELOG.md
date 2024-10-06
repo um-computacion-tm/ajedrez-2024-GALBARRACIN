@@ -1,6 +1,11 @@
 # Changelog
 This file documents all significant changes made to this chess project.
 
+## [v0.3.1] - 2024-10-06
+- Reorganized the main file for TestCoverage reasons.
+- Comments were added again in the codes.
+- Added more tests for Test coverage reasons. 
+- Updated prefixes and suffixes ( “__” ) in Attributes.
 
 ## [v0.3.0] - 2024-10-03
 #### Added
