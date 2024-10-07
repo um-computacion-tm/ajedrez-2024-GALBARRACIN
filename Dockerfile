@@ -1,11 +1,20 @@
-FROM ubuntu:latest
+# imagen 
+FROM python:3-alpine
 
-RUN apt update && apt upgrade -y && apt install python3 -y && apt install python3-pip -y && apt install redis -y && apt install git -y && apt install autoremove -y
+# Actualizar el sistema e instalar las dependencias necesarias
+RUN apk add --no-cache git redis
 
-RUN git clone git@github.com:um-computacion-tm/ajedrez-2024-GALBARRACIN.git
+# Clonar el repositorio (HTTPS si es público)
+RUN git clone https://github.com/um-computacion-tm/ajedrez-2024-GALBARRACIN.git
 
+# Cambiar el directorio de trabajo a chess_game_console
 WORKDIR /ajedrez-2024-GALBARRACIN
 
-RUN pip3 install -r requirements.txt
+# Instalar las dependencias del proyecto
+RUN pip install -r requirements.txt
 
-CMD python3 chess_game_console/main.py
+# Pone a la vista el puerto para que se conecte
+EXPOSE 6379
+
+# Comando por defecto para ejecutar el script principal
+CMD ["sh", "-c","redis-server --daemonize yes && coverage run -m unittest discover chess_game_console && coverage report -m && python chess_game_console/main.py"]
