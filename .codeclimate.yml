@@ -44,6 +44,7 @@ checks:
 exclude_patterns:
 - "config/"
 - "db/"
+- "myenv/"
 - "dist/"
 - "features/"
 - "venv/"
