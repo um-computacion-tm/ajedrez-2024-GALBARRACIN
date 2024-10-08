@@ -1,10 +1,13 @@
 # Changelog
 This file documents all significant changes made to this chess project.
 
+## [v0.3.3] - 2024-10-08
+- The dashboard is visually more intuitive
+
 ## [v0.3.2] - 2024-10-07
-- the Dockerfile has been updated 
-- added /myenv file containing virtual redis
-- any settings were changed
+- The Dockerfile has been updated 
+- Added /myenv file containing virtual redis
+- Any settings were changed
 
 ## [v0.3.1] - 2024-10-06
 - Reorganized the main file for TestCoverage reasons.
