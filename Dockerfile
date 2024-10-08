@@ -26,5 +26,5 @@ CMD ["sh", "-c","redis-server --daemonize yes && coverage run -m unittest discov
 #nano Dockerfile = Edito el contenido del Docker 
 #ls Dockerfile = selecciono de la lista
 
-#sudo docker --tag ajedrez .
+#sudo docker build --tag ajedrez .
 #sudo docker run -i ajedrez 
